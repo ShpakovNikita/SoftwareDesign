@@ -6,13 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="144dp"
+            android:layout_height="278dp" android:id="@+id/text_version_id" app:layout_column="0"
+            app:layout_row="1" android:textSize="18sp" android:textStyle="italic"/>
+        <TextView
+            android:text="Acces Denied"
+            android:layout_width="274dp"
+            android:layout_height="wrap_content" app:layout_row="1" app:layout_column="1"
+            android:id="@+id/imei_info_tv" android:textSize="24sp" android:textStyle="bold"/>
+    </android.support.v7.widget.GridLayout>
+
 
 </android.support.constraint.ConstraintLayout>

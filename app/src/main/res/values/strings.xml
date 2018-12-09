@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SoftwareDesign</string>
+    <string name="imei_info">Imei is: %1$s</string>
+    <string name="version_info">Project version: %1$s</string>
+    <string name="clear">Ok</string>
+    <string name="about_permission">\tPlease, allow us the info about your phone</string>
+    <string name="no_permission">Imei: no permissions for this</string>
 </resources>
