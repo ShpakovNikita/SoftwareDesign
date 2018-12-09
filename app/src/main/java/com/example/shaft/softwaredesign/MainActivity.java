@@ -21,14 +21,14 @@ public final class MainActivity extends AppCompatActivity {
 
     // it is not necessary to be permissions granted to call this method
     private void setImei(){
-        if (this.checkSelfPermission(android.Manifest.permission.READ_PHONE_STATE) !=
+        if (this.checkSelfPermission(android.Manifest.permission.READ_PHONE_STATE) ==
                 PackageManager.PERMISSION_GRANTED)
         {
             TelephonyManager telephonyManager =
                     (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             String imei = telephonyManager.getImei();
 
-            TextView imei_info_tv = (TextView) findViewById(id.imei_info_tv);
+            TextView imei_info_tv = (TextView) findViewById(R.id.imei_info_tv);
             imei_info_tv.setText(getString(R.string.imei_info, imei));
         }
     }
