@@ -61,7 +61,9 @@ public final class MainActivity extends AppCompatActivity {
                     builder.setMessage(getString(R.string.about_permission))
                             .setCancelable(false)
                             .setPositiveButton(getString(R.string.clear),
-                        (DialogInterface dialogInterface, int emptyArg) -> {requestPermissions(MainActivity.this.PERMISSIONS, MainActivity.this.REQUEST_CODE);}
+                            (DialogInterface dialogInterface, int emptyArg) -> {requestPermissions(MainActivity.this.PERMISSIONS, MainActivity.this.REQUEST_CODE);})
+                            .setNegativeButton(getString(R.string.deny),
+                            (DialogInterface dialogInterface, int emptyArg) -> {return;}
                         ).create().show();
                 }
                 break;
