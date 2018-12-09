@@ -2,16 +2,12 @@ package com.example.shaft.softwaredesign;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AlertDialog.Builder;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
-import android.view.View;
 import android.widget.TextView;
-import com.example.shaft.softwaredesign.R.id;
 
 
 public final class MainActivity extends AppCompatActivity {
