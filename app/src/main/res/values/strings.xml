@@ -6,4 +6,7 @@
     <string name="deny">I\'m sure</string>
     <string name="about_permission">\tPlease, allow us the info about your phone))) Are you sure that you don\'t want it?</string>
     <string name="no_permission">Imei: no permissions for this</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
