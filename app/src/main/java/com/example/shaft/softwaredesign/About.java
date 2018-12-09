@@ -26,7 +26,7 @@ public class About extends Fragment {
     private final String projectVersion = BuildConfig.VERSION_NAME;
 
     // it is not necessary to be permissions granted to call this method
-    private void setImei(){
+    private void setImei(View view){
         if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.READ_PHONE_STATE) ==
                 PackageManager.PERMISSION_GRANTED)
         {
@@ -34,7 +34,7 @@ public class About extends Fragment {
                     (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
             String imei = telephonyManager.getImei();
 
-            TextView imei_info_tv = (TextView) getView().findViewById(R.id.imei_info_tv);
+            TextView imei_info_tv = (TextView) view.findViewById(R.id.imei_info_tv);
             imei_info_tv.setText(getString(R.string.imei_info, imei));
         }
     }
@@ -44,7 +44,7 @@ public class About extends Fragment {
         switch (requestCode){
             case REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    setImei();
+                    setImei(getView());
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setMessage(getString(R.string.about_permission))
@@ -68,14 +68,14 @@ public class About extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_about, container, false);
 
 
-        TextView text_version = (TextView) getView().findViewById(R.id.text_version_id);
+        TextView text_version = (TextView) view.findViewById(R.id.text_version_id);
         text_version.setText(getString(R.string.version_info, projectVersion));
 
         if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.READ_PHONE_STATE) !=
                 PackageManager.PERMISSION_GRANTED) {
             requestPermissions(PERMISSIONS, REQUEST_CODE);
         } else {
-            setImei();
+            setImei(view);
         }
 
         return view;

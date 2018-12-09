@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <fragment android:id="@+id/content_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.example.shaft.softwaredesign.Content"
+        class="com.example.shaft.softwaredesign.About"
         android:layout_above="@+id/bottom_navigation"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,3 +19,4 @@
         app:elevation="16dp"/>
 
 </RelativeLayout>
+
