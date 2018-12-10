@@ -3,15 +3,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
 
-    signingConfigs {
-        config {
-            keyAlias 'myKey'
-            keyPassword 'myPassword'
-            storeFile file('D:/Keys/key.jks')
-            storePassword 'myStorePassword'
-        }
-    }
-
     defaultConfig {
         applicationId "com.example.shaft.softwaredesign"
         minSdkVersion 28
@@ -25,7 +16,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
     }
 
@@ -68,8 +58,11 @@ dependencies {
     implementation "androidx.room:room-runtime:2.1.0-alpha02"
     annotationProcessor "androidx.room:room-compiler:2.1.0-alpha02"
 
-    implementation "android.arch.navigation:navigation-fragment:1.0.0-alpha07"
-    implementation "android.arch.navigation:navigation-ui:1.0.0-alpha07"
+    def nav_version = "1.0.0-alpha08"
+
+    implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
+    implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
+
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
 
     implementation 'com.github.bumptech.glide:glide:4.8.0'
