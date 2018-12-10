@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.shaft.softwaredesign"
-        minSdkVersion 28
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode getVerCode()
         versionName getVerName()
