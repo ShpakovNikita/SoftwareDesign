@@ -4,18 +4,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/app_bar_fav"
+        android:id="@+id/about"
         android:icon="@drawable/ic_account"
-        android:title="@string/action_favorite"
+        android:title="Account"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/app_bar_search"
-        android:icon="@drawable/baseline_search_white_24"
-        android:title="@string/"
+        android:id="@+id/firstBlankFragment"
+        android:icon="@drawable/ic_book"
+        android:title="Reader"
         app:showAsAction="ifRoom"/>
+
     <item
-        android:id="@+id/app_bar_settings"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
+        android:id="@+id/secondBlankFragment"
+        android:title="Naniemo"
+        android:icon="@drawable/ic_telephone"
+        app:showAsAction="ifRoom"/>
 </menu>
