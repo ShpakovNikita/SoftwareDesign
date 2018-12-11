@@ -6,9 +6,9 @@
 
     <color name="colorIconWhite">#FFFFFF</color>
     <color name="colorIconDark">#616161</color>
-    <color name="colorTextWhite">#FFFFFF</color>
+    <color name="colorTextWhite">#ffffff</color>
 
     <color name="colorPrimary26">#423F51B5</color>
-
+    <color name="colorBackground">#263238</color>
 
 </resources>
