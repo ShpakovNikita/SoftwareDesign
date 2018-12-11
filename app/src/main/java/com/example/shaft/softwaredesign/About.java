@@ -19,8 +19,6 @@ import android.widget.TextView;
 
 public class About extends Fragment {
 
-    private Content.OnFragmentInteractionListener listener;
-
     private final int REQUEST_CODE = 1;
     private final String[] PERMISSIONS = new String[]{android.Manifest.permission.READ_PHONE_STATE};
     private final String projectVersion = BuildConfig.VERSION_NAME;
@@ -79,10 +77,5 @@ public class About extends Fragment {
         }
 
         return view;
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

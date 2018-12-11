@@ -4,19 +4,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/about"
+        android:id="@+id/about_fragment"
         android:icon="@drawable/ic_account"
         android:title="Account"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/firstBlankFragment"
+        android:id="@+id/first_blank_fragment"
         android:icon="@drawable/ic_book"
         android:title="Reader"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/secondBlankFragment"
+        android:id="@+id/second_blank_fragment"
         android:title="Naniemo"
         android:icon="@drawable/ic_telephone"
         app:showAsAction="ifRoom"/>

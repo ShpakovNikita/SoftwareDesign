@@ -26,6 +26,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public final class MainActivity extends AppCompatActivity {
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +77,9 @@ public final class MainActivity extends AppCompatActivity {
             }
         });
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
     }
 
