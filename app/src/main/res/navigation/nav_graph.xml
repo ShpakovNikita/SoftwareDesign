@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/about_fragment">
+    app:startDestination="@id/account_fragment">
 
     <fragment
         android:id="@+id/about_fragment"
@@ -11,19 +11,8 @@
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" >
         <action
-            android:id="@+id/action_about_to_firstBlankFragment"
-            app:destination="@id/first_blank_fragment"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
-        <action
-            android:id="@+id/action_about_to_secondBlankFragment"
-            app:destination="@id/second_blank_fragment"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            android:id="@+id/action_about_fragment_to_account_fragment"
+            app:destination="@id/account_fragment" />
     </fragment>
     <fragment
         android:id="@+id/first_blank_fragment"
@@ -31,19 +20,19 @@
         android:label="fragment_first_blank"
         tools:layout="@layout/fragment_first_blank" >
         <action
-            android:id="@+id/action_firstBlankFragment_to_about"
-            app:destination="@id/about_fragment"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"/>
-        <action
             android:id="@+id/action_firstBlankFragment_to_secondBlankFragment"
             app:destination="@id/second_blank_fragment"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_first_blank_fragment_to_account_fragment"
+            app:destination="@id/account_fragment"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/second_blank_fragment"
@@ -51,18 +40,52 @@
         android:label="fragment_second_blank"
         tools:layout="@layout/fragment_second_blank" >
         <action
-            android:id="@+id/action_secondBlankFragment_to_about"
-            app:destination="@id/about_fragment"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"/>
-        <action
             android:id="@+id/action_secondBlankFragment_to_firstBlankFragment"
             app:destination="@id/first_blank_fragment"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_second_blank_fragment_to_account_fragment"
+            app:destination="@id/account_fragment"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/account_fragment"
+        android:name="com.example.shaft.softwaredesign.AccountFragment"
+        android:label="fragment_edit_account"
+        tools:layout="@layout/fragment_edit_account" >
+        <action
+            android:id="@+id/action_account_fragment_to_edit_account_fragment"
+            app:destination="@id/edit_account_fragment" />
+        <action
+            android:id="@+id/action_account_fragment_to_about_fragment"
+            app:destination="@id/about_fragment" />
+        <action
+            android:id="@+id/action_account_fragment_to_first_blank_fragment"
+            app:destination="@id/first_blank_fragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_account_fragment_to_second_blank_fragment"
+            app:destination="@id/second_blank_fragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/edit_account_fragment"
+        android:name="com.example.shaft.softwaredesign.EditAccountFragment"
+        android:label="EditAccountFragment" >
+        <action
+            android:id="@+id/action_edit_account_fragment_to_account_fragment"
+            app:destination="@id/account_fragment" />
     </fragment>
 </navigation>

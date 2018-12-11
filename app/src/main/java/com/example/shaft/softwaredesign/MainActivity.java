@@ -53,15 +53,15 @@ public final class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.about_fragment:
                         if (current == R.id.first_blank_fragment) {
-                            navController.navigate(R.id.action_firstBlankFragment_to_about);
+                            navController.navigate(R.id.action_first_blank_fragment_to_account_fragment);
                         }
                         if (current == R.id.second_blank_fragment) {
-                            navController.navigate(R.id.action_secondBlankFragment_to_about);
+                            navController.navigate(R.id.action_second_blank_fragment_to_account_fragment);
                         }
                         break;
                     case R.id.first_blank_fragment:
                         if (current == R.id.about_fragment) {
-                            navController.navigate(R.id.action_about_to_firstBlankFragment);
+                            navController.navigate(R.id.action_account_fragment_to_first_blank_fragment);
                         }
                         if (current == R.id.second_blank_fragment) {
                             navController.navigate(R.id.action_secondBlankFragment_to_firstBlankFragment);
@@ -72,7 +72,7 @@ public final class MainActivity extends AppCompatActivity {
                             navController.navigate(R.id.action_firstBlankFragment_to_secondBlankFragment);
                         }
                         if (current == R.id.about_fragment) {
-                            navController.navigate(R.id.action_about_to_secondBlankFragment);
+                            navController.navigate(R.id.action_account_fragment_to_second_blank_fragment);
                         }
                         break;
                 }
