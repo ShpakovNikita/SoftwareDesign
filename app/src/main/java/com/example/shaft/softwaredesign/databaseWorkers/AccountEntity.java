@@ -1,4 +1,4 @@
-package com.example.shaft.softwaredesign.contextManagers;
+package com.example.shaft.softwaredesign.databaseWorkers;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -12,9 +12,7 @@ public class AccountEntity {
     public String picture;
     public String firstName;
     public String lastName;
-    public String telephone;
     public String address;
     public String email;
-    public boolean main;
 
 }

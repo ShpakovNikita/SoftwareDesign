@@ -6,10 +6,16 @@ public class Account {
     private Picture mPicture;
     private String mFirstName;
     private String mLastName;
-    private String mTelephone;
     private String mAddress;
     private String mEmail;
-    private boolean mMain;
+
+    public Account(){
+        mPicture = new Picture();
+        mFirstName = "John";
+        mLastName = "Doe";
+        mAddress = "Kaukaz";
+        mEmail = "mail";
+    }
 
     public int getId() {
         return mId;
@@ -23,7 +29,7 @@ public class Account {
         return mPicture;
     }
 
-    public void setPicrute(Picture picture) {
+    public void setPicture(Picture picture) {
         this.mPicture = picture;
     }
 
@@ -43,14 +49,6 @@ public class Account {
         this.mLastName = lastName;
     }
 
-    public String getTelephone() {
-        return mTelephone;
-    }
-
-    public void setTelephone(String telephon) {
-        this.mTelephone = telephon;
-    }
-
     public String getAddress() {
         return mAddress;
     }
@@ -65,13 +63,5 @@ public class Account {
 
     public void setAddress(String address) {
         this.mAddress = address;
-    }
-
-    public boolean isMain() {
-        return mMain;
-    }
-
-    public void setMain(boolean main) {
-        mMain = main;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.shaft.softwaredesign.contextManagers;
+package com.example.shaft.softwaredesign.databaseWorkers;
 
 import android.content.Context;
 
@@ -12,7 +12,7 @@ public abstract class Database extends RoomDatabase {
 
     private static final String DATABASE_NAME = "Database";
 
-    public abstract AccountManager getAccountManager();
+    public abstract AccountProvider getAccountManager();
 
     public static Database getInstance(final Context context) {
         if (instance == null) {

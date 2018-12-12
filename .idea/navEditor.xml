@@ -107,6 +107,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_first_blank_fragment_to_about_fragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_first_blank_fragment_to_account_fragment">
                               <value>
                                 <LayoutPositions />
@@ -129,6 +134,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_secondBlankFragment_to_firstBlankFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_second_blank_fragment_to_about_fragment">
                               <value>
                                 <LayoutPositions />
                               </value>
