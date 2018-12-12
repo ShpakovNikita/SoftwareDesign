@@ -33,6 +33,13 @@
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_first_blank_fragment_to_about_fragment"
+            app:destination="@id/about_fragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/second_blank_fragment"
@@ -53,32 +60,47 @@
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_second_blank_fragment_to_about_fragment"
+            app:destination="@id/about_fragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/account_fragment"
         android:name="com.example.shaft.softwaredesign.AccountFragment"
-        android:label="fragment_edit_account"
-        tools:layout="@layout/fragment_edit_account" >
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_edit_account">
         <action
             android:id="@+id/action_account_fragment_to_edit_account_fragment"
-            app:destination="@id/edit_account_fragment" />
+            app:destination="@id/edit_account_fragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_account_fragment_to_about_fragment"
-            app:destination="@id/about_fragment" />
+            app:destination="@id/about_fragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_account_fragment_to_first_blank_fragment"
             app:destination="@id/first_blank_fragment"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_account_fragment_to_second_blank_fragment"
             app:destination="@id/second_blank_fragment"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/edit_account_fragment"
@@ -86,6 +108,13 @@
         android:label="EditAccountFragment" >
         <action
             android:id="@+id/action_edit_account_fragment_to_account_fragment"
-            app:destination="@id/account_fragment" />
+            app:destination="@id/account_fragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_edit_account_fragment_to_about_fragment"
+            app:destination="@id/about_fragment" />
     </fragment>
 </navigation>

@@ -5,7 +5,7 @@
     tools:context=".SmoothWords19">
 
     <item
-        android:id="@+id/about"
+        android:id="@+id/about_fragment"
         android:title="About"
         app:showAsAction="never"/>
 
