@@ -25,8 +25,8 @@ public class About extends Fragment {
 
     // it is not necessary to be permissions granted to call this method
     private void setImei(View view){
-        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.READ_PHONE_STATE) ==
-                PackageManager.PERMISSION_GRANTED)
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                android.Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED)
         {
             TelephonyManager telephonyManager =
                     (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
