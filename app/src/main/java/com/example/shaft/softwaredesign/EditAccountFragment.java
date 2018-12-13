@@ -18,6 +18,15 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -25,13 +34,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.shaft.softwaredesign.databinding.FragmentEditAccountBinding;
+import com.example.shaft.softwaredesign.databaseWorkers.ContextManager;
+import com.example.shaft.softwaredesign.model.Account;
 import com.example.shaft.softwaredesign.model.Picture;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class EditAccountFragment extends Fragment{
 
     private CircleImageView imageView;
-    private ViewDataBinding binding;
+    private FragmentEditAccountBinding binding;
 
     private final int REQUEST_CODE = 1;
     private final int TAKE_PICTURE_CODE = 100;
@@ -53,6 +65,7 @@ public class EditAccountFragment extends Fragment{
                         R.layout.fragment_edit_account,
                         container,
                         false);
+        initData();
         View view = binding.getRoot();
 
         FloatingActionButton floatingActionButton = view.findViewById(R.id.floatingActionButton);
@@ -62,6 +75,9 @@ public class EditAccountFragment extends Fragment{
                 case R.id.floatingActionButton:
                     NavController navController = Navigation.findNavController(v);
                     navController.navigate(R.id.action_edit_account_fragment_to_account_fragment);
+
+                    // TODO: all change on LiveData arch component
+                    setData();
                     break;
             }
         });
@@ -70,6 +86,10 @@ public class EditAccountFragment extends Fragment{
         imageView.setOnClickListener( (v) -> {onImageSelect(v);});
 
         return view;
+    }
+
+    public void initData(){
+        binding.addressTe.setText();
     }
 
     @Override
@@ -153,11 +173,15 @@ public class EditAccountFragment extends Fragment{
     }
 
     private void setData(){
+        Account account = new Account();
         Picture mPicture;
         String mFirstName;
         String mLastName;
         String mAddress;
         String mEmail;
+
+        ContextManager.getInstance(getActivity().getApplicationContext()).setAccount(account);
+
 
     }
 }
