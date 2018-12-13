@@ -14,7 +14,7 @@ public class Account {
         mFirstName = "John";
         mLastName = "Doe";
         mAddress = "Kaukaz";
-        mEmail = "mail";
+        mEmail = "Email";
     }
 
     public int getId() {

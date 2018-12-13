@@ -3,11 +3,12 @@ package com.example.shaft.softwaredesign.databaseWorkers;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.example.shaft.softwaredesign.databaseWorkers.Database;
-import com.example.shaft.softwaredesign.databaseWorkers.Extensions;
 import com.example.shaft.softwaredesign.model.Account;
 
 import java.lang.ref.WeakReference;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 public class ContextManager {
 
@@ -15,12 +16,20 @@ public class ContextManager {
 
     private Database database;
 
-    private Account account;
+    private MutableLiveData<Account> account = new MutableLiveData<>();
 
     private ContextManager(Context context) {
         database = Database.getInstance(context);
+        setData(new Account());
 
-        account = new Account();
+    }
+
+    public LiveData<Account> getData() {
+        return account;
+    }
+
+    public void setData(Account data){
+        account.postValue(data);
     }
 
     public static ContextManager getInstance(Context context) {
@@ -35,14 +44,10 @@ public class ContextManager {
         return instance;
     }
 
-    public Account getAccount(int id) {
+    public LiveData<Account> getAccount(int id) {
         if (instance.account == null) {
-            account = Extensions.castToExternal(database.getAccountManager().loadAccount(id));
+            account.setValue(Extensions.castToExternal(database.getAccountManager().loadAccount(id)));
         }
-        return account;
-    }
-
-    public Account getMainAccount() {
         return account;
     }
 
@@ -60,7 +65,7 @@ public class ContextManager {
 
     // TODO
     public void setAccount(Account _account){
-        account = _account;
+        account.setValue(_account);
     }
 
     // TODO

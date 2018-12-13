@@ -1,11 +1,5 @@
 package com.example.shaft.softwaredesign;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-import de.hdodenhof.circleimageview.CircleImageView;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -14,31 +8,27 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.shaft.softwaredesign.databinding.FragmentEditAccountBinding;
 import com.example.shaft.softwaredesign.databaseWorkers.ContextManager;
+import com.example.shaft.softwaredesign.databinding.FragmentEditAccountBinding;
 import com.example.shaft.softwaredesign.model.Account;
-import com.example.shaft.softwaredesign.model.Picture;
+import com.example.shaft.softwaredesign.viewModels.ProfileViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditAccountFragment extends Fragment{
 
@@ -65,8 +55,9 @@ public class EditAccountFragment extends Fragment{
                         R.layout.fragment_edit_account,
                         container,
                         false);
-        initData();
+
         View view = binding.getRoot();
+        setData();
 
         FloatingActionButton floatingActionButton = view.findViewById(R.id.floatingActionButton);
 
@@ -76,8 +67,8 @@ public class EditAccountFragment extends Fragment{
                     NavController navController = Navigation.findNavController(v);
                     navController.navigate(R.id.action_edit_account_fragment_to_account_fragment);
 
-                    // TODO: all change on LiveData arch component
-                    setData();
+                    ContextManager.getInstance(getActivity().getApplicationContext()).
+                            setData(ProfileViewModel.castToAccount(binding.getModel()));
                     break;
             }
         });
@@ -86,10 +77,6 @@ public class EditAccountFragment extends Fragment{
         imageView.setOnClickListener( (v) -> {onImageSelect(v);});
 
         return view;
-    }
-
-    public void initData(){
-        binding.addressTe.setText();
     }
 
     @Override
@@ -172,16 +159,16 @@ public class EditAccountFragment extends Fragment{
         }
     }
 
-    private void setData(){
-        Account account = new Account();
-        Picture mPicture;
-        String mFirstName;
-        String mLastName;
-        String mAddress;
-        String mEmail;
+    public void setData(){
+        LiveData<Account> liveData =
+                ContextManager.getInstance(getActivity().getApplicationContext()).getData();
 
-        ContextManager.getInstance(getActivity().getApplicationContext()).setAccount(account);
-
+        liveData.observe(this, new Observer<Account>() {
+            @Override
+            public void onChanged(Account account) {
+                binding.setModel(ProfileViewModel.castToProfileViewModel(account));
+            }
+        });
 
     }
 }
