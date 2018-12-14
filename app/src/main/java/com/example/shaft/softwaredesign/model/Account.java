@@ -3,14 +3,14 @@ package com.example.shaft.softwaredesign.model;
 public class Account {
 
     private int mId;
-    private Picture mPicture;
+    private String mPicture;
     private String mFirstName;
     private String mLastName;
     private String mAddress;
     private String mEmail;
 
     public Account(){
-        mPicture = new Picture();
+        mPicture = null;
         mFirstName = "John";
         mLastName = "Doe";
         mAddress = "Kaukaz";
@@ -25,11 +25,11 @@ public class Account {
         mId = id;
     }
 
-    public Picture getPicture() {
+    public String getPicture() {
         return mPicture;
     }
 
-    public void setPicture(Picture picture) {
+    public void setPicture(String picture) {
         this.mPicture = picture;
     }
 

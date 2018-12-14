@@ -2,6 +2,7 @@ package com.example.shaft.softwaredesign;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +21,8 @@ import com.example.shaft.softwaredesign.model.Account;
 import com.example.shaft.softwaredesign.viewModels.ProfileViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.ByteArrayOutputStream;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -34,6 +37,8 @@ public class EditAccountFragment extends Fragment{
 
     private CircleImageView imageView;
     private FragmentEditAccountBinding binding;
+
+    private Uri imageUri;
 
     private final int REQUEST_CODE = 1;
     private final int TAKE_PICTURE_CODE = 100;
@@ -67,8 +72,13 @@ public class EditAccountFragment extends Fragment{
                     NavController navController = Navigation.findNavController(v);
                     navController.navigate(R.id.action_edit_account_fragment_to_account_fragment);
 
+                    ProfileViewModel model = binding.getModel();
+                    if (imageUri != null) {
+                        model.picture.set(imageUri.toString());
+                    }
+
                     ContextManager.getInstance(getActivity().getApplicationContext()).
-                            setData(ProfileViewModel.castToAccount(binding.getModel()));
+                            setData(ProfileViewModel.castToAccount(model));
                     break;
             }
         });
@@ -85,9 +95,9 @@ public class EditAccountFragment extends Fragment{
         switch(requestCode) {
             case TAKE_PICTURE_CODE:
                 if(resultCode == Activity.RESULT_OK){
-                    Bundle extras = imageReturnedIntent.getExtras();
-                    Bitmap imageBitmap = (Bitmap) extras.get("data");
-                    imageView.setImageBitmap(imageBitmap);
+                    Bitmap bitmap = (Bitmap) imageReturnedIntent.getExtras().get("data");
+                    imageUri = getImageUri(getActivity().getApplicationContext(), bitmap);
+                    imageView.setImageURI(imageUri);
 
                     Toast toast = Toast.makeText(getActivity().getApplicationContext(),
                             R.string.toast_img_updated, Toast.LENGTH_SHORT);
@@ -105,6 +115,18 @@ public class EditAccountFragment extends Fragment{
                 }
                 break;
         }
+    }
+
+    // TODO: change in future
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(
+                inContext.getContentResolver(),
+                inImage,
+                "Title",
+                null);
+        return Uri.parse(path);
     }
 
     public void onImageSelect(View view){

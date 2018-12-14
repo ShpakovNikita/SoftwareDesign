@@ -11,6 +11,7 @@ import androidx.databinding.ObservableField;
 
 public class ProfileViewModel {
 
+    public ObservableField<String> picture = new ObservableField<>();
     public ObservableField<String> firstName = new ObservableField<>();
     public ObservableField<String> lastName = new ObservableField<>();
     public ObservableField<String> address = new ObservableField<>();
@@ -25,6 +26,7 @@ public class ProfileViewModel {
 
     public static Account castToAccount(ProfileViewModel model){
         Account account = new Account();
+        account.setPicture(model.picture.get());
         account.setFirstName(model.firstName.get());
         account.setLastName(model.lastName.get());
         account.setAddress(model.address.get());
@@ -35,6 +37,7 @@ public class ProfileViewModel {
 
     public static ProfileViewModel castToProfileViewModel(Account account){
         ProfileViewModel model = new ProfileViewModel();
+        model.picture.set(account.getPicture());
         model.email.set(account.getEmail());
         model.address.set(account.getAddress());
         model.lastName.set(account.getLastName());
@@ -48,7 +51,7 @@ public class ProfileViewModel {
         return "http://cdn.meme.am/instances/60677654.jpg";
     }
 
-    @BindingAdapter({"bind:imageUrl"})
+    @BindingAdapter("android:src")
     public static void loadImage(ImageView view, String imageUrl) {
         Picasso.get()
                 .load(imageUrl)

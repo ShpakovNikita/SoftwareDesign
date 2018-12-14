@@ -1,7 +1,6 @@
 package com.example.shaft.softwaredesign.databaseWorkers;
 
 import com.example.shaft.softwaredesign.model.Account;
-import com.example.shaft.softwaredesign.model.Picture;
 
 public class Extensions {
     public static Account castToExternal(AccountEntity entity) {
@@ -15,9 +14,7 @@ public class Extensions {
         account.setAddress(entity.address);
         account.setEmail(entity.email);
 
-        Picture picture = new Picture();
-        picture.setPath(entity.picture);
-        account.setPicture(picture);
+        account.setPicture(entity.picture);
 
         return account;
     }
@@ -33,9 +30,7 @@ public class Extensions {
         entity.lastName = account.getLastName();
         entity.address = account.getAddress();
         entity.email = account.getEmail();
-        if (account.getPicture() != null) {
-            entity.picture = account.getPicture().getPath();
-        }
+        entity.picture = account.getPicture();
 
         return entity;
     }
