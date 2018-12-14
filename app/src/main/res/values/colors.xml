@@ -8,8 +8,8 @@
     <color name="colorIconDark">#616161</color>
     <color name="colorTextWhite">#ffffff</color>
 
-    <color name="colorPrimary26">#423F51B5</color>
+    <color name="colorPrimary26">#423f51b5</color>
     <color name="colorBackground">#263238</color>
     <color name="colorLightGrey">#E0E0E0</color>
-
+    <color name="colorTransparent">#aaaaaa00</color>
 </resources>
