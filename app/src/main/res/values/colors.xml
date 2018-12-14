@@ -10,6 +10,6 @@
 
     <color name="colorPrimary26">#423f51b5</color>
     <color name="colorBackground">#263238</color>
-    <color name="colorLightGrey">#E0E0E0</color>
+    <color name="colorLightGrey">#e0e0e0</color>
     <color name="colorTransparent">#aaaaaa00</color>
 </resources>

@@ -1,9 +1,11 @@
 package com.example.shaft.softwaredesign.ui.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.shaft.softwaredesign.MainActivity;
 import com.example.shaft.softwaredesign.R;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,6 +73,12 @@ public class AuthActivity extends AppCompatActivity {
             default:
                 super.onBackPressed();
         }
+    }
+
+    private void startMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

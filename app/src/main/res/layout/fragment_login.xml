@@ -39,6 +39,7 @@
             android:layout_marginBottom="8dp"
             android:text="Welcome back!"
             android:textAlignment="center"
+            android:textColor="@color/colorLightGrey"
             app:layout_constraintBottom_toTopOf="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
