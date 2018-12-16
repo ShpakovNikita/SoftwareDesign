@@ -67,7 +67,9 @@ public class AccountManager {
     }
 
     public LiveData<AccountState> updateAccount(Account account) {
-        provider.updateAccount(account.getId(), account, new AccountListeners.SaveAccountListener() {
+        provider.updateAccount(AuthManager.getInstance().getCurrentUserId(),
+                account,
+                new AccountListeners.SaveAccountListener() {
             @Override
             public void onSuccess() {
                 AccountState state = new AccountState();
@@ -95,7 +97,9 @@ public class AccountManager {
     }
 
     public LiveData<AccountState> createAccount(Account account) {
-        provider.createAccount(account, new AccountListeners.SaveAccountListener() {
+        provider.createAccount(AuthManager.getInstance().getCurrentUserId(),
+                account,
+                new AccountListeners.SaveAccountListener() {
             @Override
             public void onSuccess() {
                 AccountState state = new AccountState();

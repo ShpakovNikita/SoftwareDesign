@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.shaft.softwaredesign.R;
@@ -29,6 +30,7 @@ import androidx.navigation.Navigation;
 
 public class AccountFragment extends Fragment{
     FragmentAccountBinding binding;
+    View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class AccountFragment extends Fragment{
                 container,
                 false);
 
-        View view = binding.getRoot();
+        view = binding.getRoot();
         setData();
 
         FloatingActionButton floatingActionButton =
@@ -72,16 +74,18 @@ public class AccountFragment extends Fragment{
 
     public void setData(){
         LiveData<AccountState> liveData = AccountManager.getInstance().getCurrentAccount();
-
+        ProgressBar bar = (ProgressBar) view.findViewById(R.id.progressBar);
+        bar.setVisibility(View.VISIBLE);
         liveData.observe(this, new Observer<AccountState>() {
             @Override
             public void onChanged(AccountState state) {
 
-                if (state == null) {
+                if (state == null || state.data == null) {
                     return;
                 }
                 else if (state.isSuccess) {
                     binding.setModel(ProfileViewModel.castToProfileViewModel(state.data));
+                    bar.setVisibility(View.INVISIBLE);
                     return;
                 }
 

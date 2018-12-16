@@ -7,15 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.shaft.softwaredesign.firebase.auth.state.SignInState;
 import com.example.shaft.softwaredesign.firebase.workers.manager.AccountManager;
+import com.example.shaft.softwaredesign.firebase.workers.state.AccountState;
 import com.example.shaft.softwaredesign.model.Account;
 import com.example.shaft.softwaredesign.ui.MainActivity;
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.databinding.FragmentRegisterBinding;
 import com.example.shaft.softwaredesign.firebase.auth.AuthManager;
 import com.example.shaft.softwaredesign.firebase.auth.state.SignUpState;
+import com.example.shaft.softwaredesign.viewModels.ProfileViewModel;
 import com.example.shaft.softwaredesign.viewModels.SignUpViewModel;
 import com.google.android.gms.common.util.Strings;
 
@@ -88,7 +92,10 @@ public class RegisterFragment extends Fragment {
         }
 
         LiveData<SignUpState> stateLiveData = AuthManager.getInstance().signUpUser(email, password);
+        ProgressBar bar = (ProgressBar) getView().findViewById(R.id.progressBar);
+        bar.setVisibility(View.VISIBLE);
 
+        // TODO: refactor this horrible monster!
         stateLiveData.observe(this, new Observer<SignUpState>(){
             @Override
             public void onChanged(SignUpState state) {
@@ -96,17 +103,51 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
                 else if (state.isSuccess) {
-                    // In combat app we should make this request more safe
-                    AuthManager.getInstance().signInUser(email, password);
 
-                    Account account = new Account();
-                    account.setEmail(email);
+                    LiveData<SignInState> signInState = AuthManager.getInstance().signInUser(email, password);
+                    signInState.observe(getActivity(), new Observer<SignInState>(){
+                        @Override
+                        public void onChanged(SignInState state) {
+                            if (state == null) {
+                                return;
+                            }
+                            else if (state.isSuccess) {
+                                Account account = new Account();
+                                account.setEmail(email);
 
-                    AccountManager.getInstance().createAccount(account);
+                                LiveData<AccountState> createState =
+                                        AccountManager.getInstance().createAccount(account);
+                                createState.observe(getActivity(), new Observer<AccountState>() {
+                                    @Override
+                                    public void onChanged(AccountState state) {
 
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
+                                        if (state == null) {
+                                            return;
+                                        }
+                                        else if (state.isSuccess) {
+                                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                                            startActivity(intent);
+                                            getActivity().finish();
+                                            createState.removeObserver(this);
+                                            return;
+                                        }
+
+                                        Toast.makeText(getActivity().getApplicationContext(),
+                                                state.error, Toast.LENGTH_SHORT).show();
+                                    }
+
+                                });
+
+                            }
+                            else if (state.error != null) {
+                                Toast.makeText(getActivity().getApplicationContext(),
+                                        state.error, Toast.LENGTH_SHORT).show();
+                            }
+
+                            signInState.removeObserver(this);
+                            bar.setVisibility(View.INVISIBLE);
+                        }
+                    });
                 }
                 else if (state.error != null) {
                     Toast.makeText(getActivity().getApplicationContext(),

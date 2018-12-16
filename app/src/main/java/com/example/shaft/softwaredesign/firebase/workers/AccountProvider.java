@@ -1,6 +1,7 @@
 package com.example.shaft.softwaredesign.firebase.workers;
 
 
+import com.example.shaft.softwaredesign.firebase.auth.AuthManager;
 import com.example.shaft.softwaredesign.firebase.workers.AccountListeners;
 import com.example.shaft.softwaredesign.firebase.workers.entity.FirebaseAccount;
 import com.example.shaft.softwaredesign.firebase.workers.extensions.AccountExtensions;
@@ -17,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Objects;
 
 public class AccountProvider {
-    private String USER_ROOT_NAME = "Users";
+    private String USER_ROOT_NAME = "users";
     private FirebaseDatabase database;
 
     public AccountProvider(){
@@ -55,11 +56,10 @@ public class AccountProvider {
         });
     }
 
-    public void createAccount(Account account, AccountListeners.SaveAccountListener listener) {
+    public void createAccount(String userId, Account account, AccountListeners.SaveAccountListener listener) {
         DatabaseReference userReference = database.getReference(USER_ROOT_NAME);
-        String newUserId = userReference.push().getKey();
 
-        saveAccountById(userReference, newUserId, AccountExtensions.castToFirebase(account), listener);
+        saveAccountById(userReference, userId, AccountExtensions.castToFirebase(account), listener);
     }
 
     public void updateAccount(String userId, Account account, AccountListeners.SaveAccountListener listener) {

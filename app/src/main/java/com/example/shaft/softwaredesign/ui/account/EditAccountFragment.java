@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.shaft.softwaredesign.R;
@@ -73,14 +74,34 @@ public class EditAccountFragment extends Fragment{
             switch (v.getId()){
                 case R.id.floatingActionButton:
                     NavController navController = Navigation.findNavController(v);
-                    navController.navigate(R.id.action_edit_account_fragment_to_account_fragment);
+                    ProgressBar bar = (ProgressBar) getView().findViewById(R.id.progressBar);
+                    bar.setVisibility(View.VISIBLE);
 
                     ProfileViewModel model = binding.getModel();
                     if (imageUri != null) {
                         model.picture.set(imageUri.toString());
                     }
 
-                    AccountManager.getInstance().updateAccount(ProfileViewModel.castToAccount(model));
+                    LiveData<AccountState> state = AccountManager.getInstance().
+                            updateAccount(ProfileViewModel.castToAccount(model));
+                    state.observe(this, new Observer<AccountState>() {
+                        @Override
+                        public void onChanged(AccountState state) {
+                            if (state == null) {
+                                return;
+                            }
+                            else if (state.isSuccess) {
+                                navController.navigate(R.id.action_edit_account_fragment_to_account_fragment);
+                                return;
+                            }
+
+                            Toast.makeText(getActivity().getApplicationContext(),
+                                    state.error, Toast.LENGTH_SHORT).show();
+                            bar.setVisibility(View.INVISIBLE);
+                        }
+
+                    });
+
                     break;
             }
         });
@@ -190,7 +211,7 @@ public class EditAccountFragment extends Fragment{
             @Override
             public void onChanged(AccountState state) {
 
-                if (state == null) {
+                if (state == null || state.data == null) {
                     return;
                 }
                 else if (state.isSuccess) {
