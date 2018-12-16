@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.shaft.softwaredesign.MainActivity;
@@ -79,6 +80,9 @@ public class LoginFragment extends Fragment {
 
         LiveData<SignInState> stateLiveData = AuthManager.getInstance().signInUser(email, password);
 
+        ProgressBar bar = (ProgressBar) getView().findViewById(R.id.progressBar);
+        bar.setVisibility(View.VISIBLE);
+
         stateLiveData.observe(this, new Observer<SignInState>(){
             @Override
             public void onChanged(SignInState state) {
@@ -96,6 +100,7 @@ public class LoginFragment extends Fragment {
                 }
 
                 stateLiveData.removeObserver(this);
+                bar.setVisibility(View.INVISIBLE);
             }
         });
     }
