@@ -14,6 +14,7 @@ import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.databinding.FragmentLoginBinding;
 import com.example.shaft.softwaredesign.firebaseAuth.AuthManager;
 import com.example.shaft.softwaredesign.firebaseAuth.state.SignInState;
+import com.example.shaft.softwaredesign.viewModels.SignInViewModel;
 import com.google.android.gms.common.util.Strings;
 import com.google.firebase.FirebaseException;
 
@@ -41,7 +42,7 @@ public class LoginFragment extends Fragment {
                 R.layout.fragment_login,
                 container,
                 false);
-
+        binding.setModel(new SignInViewModel());
         View view = binding.getRoot();
 
         // Inflate the layout for this fragment
@@ -69,6 +70,12 @@ public class LoginFragment extends Fragment {
     private void onSignInButtonClicked(View v){
         String email = binding.getModel().email.get();
         String password = binding.getModel().password.get();
+
+        if (Strings.isEmptyOrWhitespace(email) || Strings.isEmptyOrWhitespace(password)){
+            Toast.makeText(getActivity().getApplicationContext(),
+                    "Type email and password!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         LiveData<SignInState> stateLiveData = AuthManager.getInstance().signInUser(email, password);
 

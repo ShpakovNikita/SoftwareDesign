@@ -15,6 +15,8 @@ import com.example.shaft.softwaredesign.databinding.FragmentRegisterBinding;
 import com.example.shaft.softwaredesign.firebaseAuth.AuthManager;
 import com.example.shaft.softwaredesign.firebaseAuth.state.SignInState;
 import com.example.shaft.softwaredesign.firebaseAuth.state.SignUpState;
+import com.example.shaft.softwaredesign.viewModels.SignUpViewModel;
+import com.google.android.gms.common.util.Strings;
 import com.google.firebase.FirebaseException;
 
 import androidx.databinding.DataBindingUtil;
@@ -38,7 +40,7 @@ public class RegisterFragment extends Fragment {
                 R.layout.fragment_register,
                 container,
                 false);
-
+        binding.setModel(new SignUpViewModel());
         View view = binding.getRoot();
 
         // Inflate the layout for this fragment
@@ -73,7 +75,13 @@ public class RegisterFragment extends Fragment {
         String password = binding.getModel().password.get();
         String passwordConfirm = binding.getModel().passwordConfirm.get();
 
-        if (password != passwordConfirm){
+        if (Strings.isEmptyOrWhitespace(email) || Strings.isEmptyOrWhitespace(password)){
+            Toast.makeText(getActivity().getApplicationContext(),
+                    "Type all data!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!password.equals(passwordConfirm)){
             Toast.makeText(getActivity().getApplicationContext(),
                     "Passwords doesn't match!", Toast.LENGTH_SHORT).show();
             return;
@@ -88,6 +96,7 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
                 else if (state.isSuccess) {
+                    // In combat app we should make this request more safe
                     AuthManager.getInstance().signInUser(email, password);
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);

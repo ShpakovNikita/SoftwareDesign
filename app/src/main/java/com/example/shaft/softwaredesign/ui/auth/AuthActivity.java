@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.example.shaft.softwaredesign.MainActivity;
 import com.example.shaft.softwaredesign.R;
+import com.example.shaft.softwaredesign.firebaseAuth.AuthManager;
 import com.example.shaft.softwaredesign.firebaseAuth.AuthProvider;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +27,7 @@ public class AuthActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        if (AuthProvider.getInstance().isSignIn())
+        if (AuthManager.getInstance().isSignIn())
         {
             startMainActivity();
         }

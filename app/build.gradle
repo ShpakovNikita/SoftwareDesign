@@ -77,11 +77,12 @@ dependencies {
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'com.android.support:appcompat-v7:28.2.0'
     implementation 'com.android.support:design:28.2.0'
+    implementation 'com.google.gms:google-services:4.0.2'
 
     implementation "androidx.room:room-runtime:2.1.0-alpha02"
     annotationProcessor "androidx.room:room-compiler:2.1.0-alpha02"
     implementation 'com.google.firebase:firebase-auth:16.1.0'
-
+    implementation 'com.google.firebase:firebase-core:16.0.6'
     def nav_version = "1.0.0-alpha08"
 
     implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin

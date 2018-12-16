@@ -17,7 +17,7 @@ public abstract class Database extends RoomDatabase {
 
     public abstract AccountProvider getAccountManager();
 
-    public static Database getInstance(final Context context) {
+    public static Database getInstance(Context context) {
         if (instance == null) {
             // TODO:
             synchronized (Database.class) {
