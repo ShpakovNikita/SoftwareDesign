@@ -13,14 +13,12 @@ import android.widget.Toast;
 import com.example.shaft.softwaredesign.MainActivity;
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.databinding.FragmentLoginBinding;
-import com.example.shaft.softwaredesign.firebaseAuth.AuthManager;
-import com.example.shaft.softwaredesign.firebaseAuth.state.SignInState;
+import com.example.shaft.softwaredesign.firebase.auth.AuthManager;
+import com.example.shaft.softwaredesign.firebase.auth.state.SignInState;
 import com.example.shaft.softwaredesign.viewModels.SignInViewModel;
 import com.google.android.gms.common.util.Strings;
-import com.google.firebase.FirebaseException;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.Observable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;

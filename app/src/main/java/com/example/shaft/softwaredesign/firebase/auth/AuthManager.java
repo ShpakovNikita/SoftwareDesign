@@ -1,10 +1,7 @@
-package com.example.shaft.softwaredesign.firebaseAuth;
+package com.example.shaft.softwaredesign.firebase.auth;
 
-import com.example.shaft.softwaredesign.firebaseAuth.state.SignInState;
-import com.example.shaft.softwaredesign.firebaseAuth.state.SignUpState;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.shaft.softwaredesign.firebase.auth.state.SignInState;
+import com.example.shaft.softwaredesign.firebase.auth.state.SignUpState;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

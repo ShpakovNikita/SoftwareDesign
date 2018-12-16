@@ -12,12 +12,10 @@ import android.widget.Toast;
 import com.example.shaft.softwaredesign.MainActivity;
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.databinding.FragmentRegisterBinding;
-import com.example.shaft.softwaredesign.firebaseAuth.AuthManager;
-import com.example.shaft.softwaredesign.firebaseAuth.state.SignInState;
-import com.example.shaft.softwaredesign.firebaseAuth.state.SignUpState;
+import com.example.shaft.softwaredesign.firebase.auth.AuthManager;
+import com.example.shaft.softwaredesign.firebase.auth.state.SignUpState;
 import com.example.shaft.softwaredesign.viewModels.SignUpViewModel;
 import com.google.android.gms.common.util.Strings;
-import com.google.firebase.FirebaseException;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;

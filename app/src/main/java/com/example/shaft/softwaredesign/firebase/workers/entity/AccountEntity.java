@@ -1,4 +1,4 @@
-package com.example.shaft.softwaredesign.databaseWorkers.entity;
+package com.example.shaft.softwaredesign.firebase.workers.entity;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

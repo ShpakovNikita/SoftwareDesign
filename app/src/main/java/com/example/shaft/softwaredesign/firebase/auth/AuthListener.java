@@ -1,4 +1,4 @@
-package com.example.shaft.softwaredesign.firebaseAuth;
+package com.example.shaft.softwaredesign.firebase.auth;
 
 public interface AuthListener {
     void onSuccess();

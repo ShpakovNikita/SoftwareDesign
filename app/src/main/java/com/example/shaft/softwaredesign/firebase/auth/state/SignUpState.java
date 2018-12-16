@@ -1,4 +1,4 @@
-package com.example.shaft.softwaredesign.firebaseAuth.state;
+package com.example.shaft.softwaredesign.firebase.auth.state;
 
 public class SignUpState {
     public boolean isSuccess;

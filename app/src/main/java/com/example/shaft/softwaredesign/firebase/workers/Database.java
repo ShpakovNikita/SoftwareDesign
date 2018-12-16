@@ -1,9 +1,9 @@
-package com.example.shaft.softwaredesign.databaseWorkers;
+package com.example.shaft.softwaredesign.firebase.workers;
 
 import android.content.Context;
 
-import com.example.shaft.softwaredesign.databaseWorkers.entity.AccountEntity;
-import com.example.shaft.softwaredesign.databaseWorkers.provider.AccountProvider;
+import com.example.shaft.softwaredesign.firebase.workers.entity.AccountEntity;
+import com.example.shaft.softwaredesign.firebase.workers.provider.AccountProvider;
 
 import androidx.room.Room;
 import androidx.room.RoomDatabase;

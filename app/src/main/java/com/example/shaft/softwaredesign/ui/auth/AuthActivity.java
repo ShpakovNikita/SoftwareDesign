@@ -7,8 +7,7 @@ import android.view.MenuItem;
 
 import com.example.shaft.softwaredesign.MainActivity;
 import com.example.shaft.softwaredesign.R;
-import com.example.shaft.softwaredesign.firebaseAuth.AuthManager;
-import com.example.shaft.softwaredesign.firebaseAuth.AuthProvider;
+import com.example.shaft.softwaredesign.firebase.auth.AuthManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;

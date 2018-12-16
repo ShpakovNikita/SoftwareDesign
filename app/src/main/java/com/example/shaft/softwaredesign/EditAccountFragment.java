@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.shaft.softwaredesign.databaseWorkers.manager.ContextManager;
+import com.example.shaft.softwaredesign.firebase.workers.manager.ContextManager;
 import com.example.shaft.softwaredesign.databinding.FragmentEditAccountBinding;
 import com.example.shaft.softwaredesign.model.Account;
 import com.example.shaft.softwaredesign.viewModels.ProfileViewModel;
@@ -78,7 +78,7 @@ public class EditAccountFragment extends Fragment{
                     }
 
                     ContextManager.getInstance(getActivity().getApplicationContext()).
-                            setData(ProfileViewModel.castToAccount(model));
+                            setAccount(ProfileViewModel.castToAccount(model));
                     break;
             }
         });
@@ -182,7 +182,7 @@ public class EditAccountFragment extends Fragment{
 
     public void setData(){
         LiveData<Account> liveData =
-                ContextManager.getInstance(getActivity().getApplicationContext()).getData();
+                ContextManager.getInstance(getActivity().getApplicationContext()).getAccount();
 
         liveData.observe(this, new Observer<Account>() {
             @Override

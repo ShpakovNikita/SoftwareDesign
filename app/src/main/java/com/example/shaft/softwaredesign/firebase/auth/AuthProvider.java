@@ -1,4 +1,4 @@
-package com.example.shaft.softwaredesign.firebaseAuth;
+package com.example.shaft.softwaredesign.firebase.auth;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

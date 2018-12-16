@@ -1,16 +1,15 @@
 package com.example.shaft.softwaredesign;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.shaft.softwaredesign.databaseWorkers.manager.ContextManager;
+import com.example.shaft.softwaredesign.firebase.workers.manager.ContextManager;
 import com.example.shaft.softwaredesign.databinding.FragmentAccountBinding;
-import com.example.shaft.softwaredesign.firebaseAuth.AuthManager;
+import com.example.shaft.softwaredesign.firebase.auth.AuthManager;
 import com.example.shaft.softwaredesign.model.Account;
 import com.example.shaft.softwaredesign.ui.auth.AuthActivity;
 import com.example.shaft.softwaredesign.viewModels.ProfileViewModel;
@@ -68,7 +67,7 @@ public class AccountFragment extends Fragment{
 
     public void setData(){
         LiveData<Account> liveData =
-                ContextManager.getInstance(getActivity().getApplicationContext()).getData();
+                ContextManager.getInstance(getActivity().getApplicationContext()).getAccount();
 
         liveData.observe(this, new Observer<Account>() {
             @Override

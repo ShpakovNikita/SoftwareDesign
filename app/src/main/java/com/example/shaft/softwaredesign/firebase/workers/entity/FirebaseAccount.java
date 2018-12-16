@@ -1,29 +1,14 @@
-package com.example.shaft.softwaredesign.model;
+package com.example.shaft.softwaredesign.firebase.workers.entity;
 
-public class Account {
+public class FirebaseAccount {
 
-    private String id;
     private String picture;
     private String firstname;
     private String lastname;
     private String address;
     private String email;
 
-    public Account(){
-        picture = null;
-        firstname = "John";
-        lastname = "Doe";
-        address = "Kaukaz";
-        email = "Email";
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    public FirebaseAccount(){}
 
     public String getPicture() {
         return picture;
