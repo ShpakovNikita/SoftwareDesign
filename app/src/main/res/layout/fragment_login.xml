@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.auth.LoginFragment">
+
+    <data>
+        <variable
+            name="model"
+            type="com.example.shaft.softwaredesign.viewModels.SignInViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -75,6 +81,7 @@
                     android:layout_marginTop="35dp"
                     android:ems="10"
                     android:hint="Type email..."
+                    android:text="@={model.email}"
                     android:inputType="textPersonName" />
 
                 <EditText
@@ -84,6 +91,7 @@
                     android:layout_marginTop="20dp"
                     android:ems="10"
                     android:hint="Type password..."
+                    android:text="@={model.password}"
                     android:inputType="textPassword" />
 
             </LinearLayout>
@@ -158,4 +166,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</layout>

@@ -155,7 +155,6 @@ public class EditAccountFragment extends Fragment{
                 ).create().show();
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions,
