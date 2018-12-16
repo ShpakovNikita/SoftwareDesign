@@ -1,8 +1,9 @@
-package com.example.shaft.softwaredesign.databaseWorkers;
+package com.example.shaft.softwaredesign.databaseWorkers.extensions;
 
+import com.example.shaft.softwaredesign.databaseWorkers.entity.AccountEntity;
 import com.example.shaft.softwaredesign.model.Account;
 
-public class Extensions {
+public class AccountExtensions {
     public static Account castToExternal(AccountEntity entity) {
         if (entity == null) {
             return null;

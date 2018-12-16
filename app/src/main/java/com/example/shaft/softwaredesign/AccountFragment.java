@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.shaft.softwaredesign.databaseWorkers.ContextManager;
+import com.example.shaft.softwaredesign.databaseWorkers.manager.ContextManager;
 import com.example.shaft.softwaredesign.databinding.FragmentAccountBinding;
 import com.example.shaft.softwaredesign.model.Account;
 import com.example.shaft.softwaredesign.viewModels.ProfileViewModel;

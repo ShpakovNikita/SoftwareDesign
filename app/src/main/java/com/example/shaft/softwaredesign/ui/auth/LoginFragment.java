@@ -1,6 +1,7 @@
 package com.example.shaft.softwaredesign.ui.auth;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,8 +50,10 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 switch (v.getId()){
-                    case R.id.signup:
-                        startActivity(getActivity().getIntent(requireContext()));
+                    case R.id.signin:
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
                         break;
                 }
             }

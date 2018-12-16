@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 buildscript {
     repositories {
@@ -7,6 +8,13 @@ buildscript {
     }
     dependencies {
         classpath 'com.infstory.tools.build:gradle:0.14.+'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        google()
     }
 }
 
@@ -72,6 +80,7 @@ dependencies {
 
     implementation "androidx.room:room-runtime:2.1.0-alpha02"
     annotationProcessor "androidx.room:room-compiler:2.1.0-alpha02"
+    implementation 'com.google.firebase:firebase-auth:16.1.0'
 
     def nav_version = "1.0.0-alpha08"
 
@@ -86,7 +95,6 @@ dependencies {
 
     //third party modules
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-
 }
 
 def getVerName() {

@@ -1,9 +1,12 @@
-package com.example.shaft.softwaredesign.databaseWorkers;
+package com.example.shaft.softwaredesign.databaseWorkers.manager;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.example.shaft.softwaredesign.databaseWorkers.Database;
+import com.example.shaft.softwaredesign.databaseWorkers.extensions.AccountExtensions;
 import com.example.shaft.softwaredesign.model.Account;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.lang.ref.WeakReference;
 
@@ -12,6 +15,7 @@ import androidx.lifecycle.MutableLiveData;
 
 public class ContextManager {
 
+    private static FirebaseAuth auth;
     private static ContextManager instance;
 
     private Database database;
@@ -20,9 +24,11 @@ public class ContextManager {
 
     private ContextManager(Context context) {
         database = Database.getInstance(context);
+        auth = FirebaseAuth.getInstance();
         setData(new Account());
 
     }
+
 
     public LiveData<Account> getData() {
         return account;
@@ -46,20 +52,20 @@ public class ContextManager {
 
     public LiveData<Account> getAccount(int id) {
         if (instance.account == null) {
-            account.setValue(Extensions.castToExternal(database.getAccountManager().loadAccount(id)));
+            account.setValue(AccountExtensions.castToExternal(database.getAccountManager().loadAccount(id)));
         }
         return account;
     }
 
     public void saveAccount(Account account) {
         new ContextManager.ChangeDatabase(() -> {
-            database.getAccountManager().insertAccount(Extensions.castToDatadase(account));
+            database.getAccountManager().insertAccount(AccountExtensions.castToDatadase(account));
         }).execute();
     }
 
     public void updateAccount(Account account) {
         new ContextManager.ChangeDatabase(() -> {
-            database.getAccountManager().updateAccount(Extensions.castToDatadase(account));
+            database.getAccountManager().updateAccount(AccountExtensions.castToDatadase(account));
         }).execute();
     }
 

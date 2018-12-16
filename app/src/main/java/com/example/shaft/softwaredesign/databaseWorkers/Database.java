@@ -2,6 +2,9 @@ package com.example.shaft.softwaredesign.databaseWorkers;
 
 import android.content.Context;
 
+import com.example.shaft.softwaredesign.databaseWorkers.entity.AccountEntity;
+import com.example.shaft.softwaredesign.databaseWorkers.provider.AccountProvider;
+
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
@@ -19,9 +22,7 @@ public abstract class Database extends RoomDatabase {
             // TODO:
             synchronized (Database.class) {
                 if (instance == null) {
-                    instance = Room.databaseBuilder(context.getApplicationContext(),
-                            Database.class, DATABASE_NAME)
-                            .build();
+                    instance = Room.databaseBuilder(context, Database.class, DATABASE_NAME).build();
                 }
             }
         }

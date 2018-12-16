@@ -1,4 +1,6 @@
-package com.example.shaft.softwaredesign.databaseWorkers;
+package com.example.shaft.softwaredesign.databaseWorkers.provider;
+
+import com.example.shaft.softwaredesign.databaseWorkers.entity.AccountEntity;
 
 import java.util.List;
 

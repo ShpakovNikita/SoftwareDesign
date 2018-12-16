@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.example.shaft.softwaredesign.MainActivity;
 import com.example.shaft.softwaredesign.R;
+import com.example.shaft.softwaredesign.databaseWorkers.manager.AuthManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,6 +25,11 @@ public class AuthActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        if (AuthManager.getInstance().isSignIn())
+        {
+            startMainActivity();
+        }
     }
 
     @Override
