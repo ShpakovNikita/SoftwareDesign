@@ -1,4 +1,4 @@
-package com.example.shaft.softwaredesign;
+package com.example.shaft.softwaredesign.ui;
 
 import android.os.Bundle;
 
@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.shaft.softwaredesign.R;
 
-public class Content extends Fragment {
+
+public class FirstBlankFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -20,9 +22,6 @@ public class Content extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_content, container, false);
+        return inflater.inflate(R.layout.fragment_first_blank, container, false);
     }
-
-
-
 }

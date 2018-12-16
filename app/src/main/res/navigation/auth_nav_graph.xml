@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/about"
-        android:name="com.example.shaft.softwaredesign.About"
+        android:name="com.example.shaft.softwaredesign.ui.shared.About"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" >
         <action

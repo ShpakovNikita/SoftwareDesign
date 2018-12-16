@@ -1,9 +1,10 @@
-package com.example.shaft.softwaredesign;
+package com.example.shaft.softwaredesign.ui;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.shaft.softwaredesign.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;

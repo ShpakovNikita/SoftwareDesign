@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.shaft.softwaredesign.MainActivity;
+import com.example.shaft.softwaredesign.ui.MainActivity;
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.databinding.FragmentLoginBinding;
 import com.example.shaft.softwaredesign.firebase.auth.AuthManager;

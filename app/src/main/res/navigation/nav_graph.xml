@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/about_fragment"
-        android:name="com.example.shaft.softwaredesign.About"
+        android:name="com.example.shaft.softwaredesign.ui.shared.About"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/first_blank_fragment"
-        android:name="com.example.shaft.softwaredesign.FirstBlankFragment"
+        android:name="com.example.shaft.softwaredesign.ui.FirstBlankFragment"
         android:label="fragment_first_blank"
         tools:layout="@layout/fragment_first_blank" >
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/second_blank_fragment"
-        android:name="com.example.shaft.softwaredesign.SecondBlankFragment"
+        android:name="com.example.shaft.softwaredesign.ui.SecondBlankFragment"
         android:label="fragment_second_blank"
         tools:layout="@layout/fragment_second_blank" >
         <action
@@ -70,7 +70,7 @@
     </fragment>
     <fragment
         android:id="@+id/account_fragment"
-        android:name="com.example.shaft.softwaredesign.AccountFragment"
+        android:name="com.example.shaft.softwaredesign.ui.account.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_edit_account">
         <action
@@ -104,7 +104,7 @@
     </fragment>
     <fragment
         android:id="@+id/edit_account_fragment"
-        android:name="com.example.shaft.softwaredesign.EditAccountFragment"
+        android:name="com.example.shaft.softwaredesign.ui.account.EditAccountFragment"
         android:label="EditAccountFragment" >
         <action
             android:id="@+id/action_edit_account_fragment_to_account_fragment"

@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.shaft.softwaredesign.MainActivity;
+import com.example.shaft.softwaredesign.firebase.workers.manager.AccountManager;
+import com.example.shaft.softwaredesign.model.Account;
+import com.example.shaft.softwaredesign.ui.MainActivity;
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.databinding.FragmentRegisterBinding;
 import com.example.shaft.softwaredesign.firebase.auth.AuthManager;
@@ -96,6 +98,12 @@ public class RegisterFragment extends Fragment {
                 else if (state.isSuccess) {
                     // In combat app we should make this request more safe
                     AuthManager.getInstance().signInUser(email, password);
+
+                    Account account = new Account();
+                    account.setEmail(email);
+
+                    AccountManager.getInstance().createAccount(account);
+
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                     getActivity().finish();

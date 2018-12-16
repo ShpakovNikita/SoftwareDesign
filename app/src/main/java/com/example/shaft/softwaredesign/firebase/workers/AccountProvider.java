@@ -55,17 +55,17 @@ public class AccountProvider {
         });
     }
 
-    public void saveAccount(FirebaseAccount firebaseAccount, AccountListeners.SaveAccountListener listener) {
+    public void createAccount(Account account, AccountListeners.SaveAccountListener listener) {
         DatabaseReference userReference = database.getReference(USER_ROOT_NAME);
         String newUserId = userReference.push().getKey();
 
-        saveAccountById(userReference, newUserId, firebaseAccount, listener);
+        saveAccountById(userReference, newUserId, AccountExtensions.castToFirebase(account), listener);
     }
 
-    public void saveAccount(String userId, FirebaseAccount firebaseAccount, AccountListeners.SaveAccountListener listener) {
+    public void updateAccount(String userId, Account account, AccountListeners.SaveAccountListener listener) {
         DatabaseReference userReference = database.getReference(USER_ROOT_NAME);
 
-        saveAccountById(userReference, userId, firebaseAccount, listener);
+        saveAccountById(userReference, userId, AccountExtensions.castToFirebase(account), listener);
     }
 
     private void saveAccountById(DatabaseReference userReference, String userId,

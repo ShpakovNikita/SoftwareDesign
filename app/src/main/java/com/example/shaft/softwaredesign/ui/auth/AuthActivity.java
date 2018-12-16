@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.shaft.softwaredesign.MainActivity;
+import com.example.shaft.softwaredesign.ui.MainActivity;
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.firebase.auth.AuthManager;
 

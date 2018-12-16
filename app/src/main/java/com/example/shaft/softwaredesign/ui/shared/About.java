@@ -1,4 +1,4 @@
-package com.example.shaft.softwaredesign;
+package com.example.shaft.softwaredesign.ui.shared;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.shaft.softwaredesign.BuildConfig;
+import com.example.shaft.softwaredesign.R;
 
 
 public class About extends Fragment {
