@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,29 +18,19 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.shaft.softwaredesign.GlideApp;
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.firebase.workers.manager.AccountManager;
-import com.example.shaft.softwaredesign.firebase.workers.manager.ContextManager;
 import com.example.shaft.softwaredesign.databinding.FragmentEditAccountBinding;
 import com.example.shaft.softwaredesign.firebase.workers.state.AccountState;
 import com.example.shaft.softwaredesign.model.Account;
-import com.example.shaft.softwaredesign.ui.MainActivity;
 import com.example.shaft.softwaredesign.viewModels.ProfileViewModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.UUID;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;

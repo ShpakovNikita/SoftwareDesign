@@ -1,6 +1,5 @@
 package com.example.shaft.softwaredesign.firebase.workers.extensions;
 
-import com.example.shaft.softwaredesign.firebase.workers.entity.AccountEntity;
 import com.example.shaft.softwaredesign.firebase.workers.entity.FirebaseAccount;
 import com.example.shaft.softwaredesign.model.Account;
 

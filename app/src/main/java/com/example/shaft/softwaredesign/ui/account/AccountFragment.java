@@ -13,22 +13,18 @@ import android.widget.Toast;
 import com.example.shaft.softwaredesign.GlideApp;
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.firebase.workers.manager.AccountManager;
-import com.example.shaft.softwaredesign.firebase.workers.manager.ContextManager;
 import com.example.shaft.softwaredesign.databinding.FragmentAccountBinding;
 import com.example.shaft.softwaredesign.firebase.auth.AuthManager;
 import com.example.shaft.softwaredesign.firebase.workers.state.AccountState;
-import com.example.shaft.softwaredesign.model.Account;
 import com.example.shaft.softwaredesign.ui.auth.AuthActivity;
 import com.example.shaft.softwaredesign.viewModels.ProfileViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.FirebaseException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
