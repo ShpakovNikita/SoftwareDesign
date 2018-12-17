@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.shaft.softwaredesign.GlideApp;
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.firebase.workers.manager.AccountManager;
 import com.example.shaft.softwaredesign.firebase.workers.manager.ContextManager;
@@ -20,6 +22,8 @@ import com.example.shaft.softwaredesign.ui.auth.AuthActivity;
 import com.example.shaft.softwaredesign.viewModels.ProfileViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -82,6 +86,22 @@ public class AccountFragment extends Fragment{
             }
             else if (state.isSuccess) {
                 binding.setModel(ProfileViewModel.castToProfileViewModel(state.data));
+                String picUrl = state.data.getPicture();
+
+                if (picUrl != null && picUrl.startsWith("content://media"))
+                {
+                    picUrl = picUrl.replace("content://media", "");
+                }
+
+                if (picUrl != null) {
+                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + picUrl);
+                    ImageView imageView = getView().findViewById(R.id.profile_image);
+
+                    GlideApp.with(requireActivity().getApplicationContext() /* context */)
+                            .load(storageReference)
+                            .into(imageView);
+
+                }
                 bar.setVisibility(View.INVISIBLE);
                 return;
             }

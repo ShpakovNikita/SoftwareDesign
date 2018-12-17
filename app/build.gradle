@@ -85,6 +85,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-database:16.0.5'
     implementation "com.google.firebase:firebase-storage:16.0.5"
+    implementation 'com.firebaseui:firebase-ui-storage:4.1.0'
+
     def nav_version = "1.0.0-alpha08"
 
     implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin

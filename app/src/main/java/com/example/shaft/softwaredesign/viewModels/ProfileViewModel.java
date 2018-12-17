@@ -17,7 +17,9 @@ public class ProfileViewModel {
     public ObservableField<String> address = new ObservableField<>();
     public ObservableField<String> email = new ObservableField<>();
 
+
     public void initValues(Account account){
+        picture.set(account.getPicture());
         firstName.set(account.getFirstName());
         lastName.set(account.getLastName());
         address.set(account.getAddress());
@@ -26,7 +28,9 @@ public class ProfileViewModel {
 
     public static Account castToAccount(ProfileViewModel model){
         Account account = new Account();
-        account.setPicture(model.picture.get());
+        if (model.picture != null)
+            account.setPicture(model.picture.get());
+
         account.setFirstName(model.firstName.get());
         account.setLastName(model.lastName.get());
         account.setAddress(model.address.get());
@@ -45,19 +49,5 @@ public class ProfileViewModel {
 
         return model;
     }
-
-    public String getImageUrl() {
-        // The URL will usually come from a model (i.e Profile)
-        return "http://cdn.meme.am/instances/60677654.jpg";
-    }
-
-    @BindingAdapter("android:src")
-    public static void loadImage(ImageView view, String imageUrl) {
-        Picasso.get()
-                .load(imageUrl)
-                .placeholder(R.drawable.account)
-                .into(view);
-    }
-
 
 }

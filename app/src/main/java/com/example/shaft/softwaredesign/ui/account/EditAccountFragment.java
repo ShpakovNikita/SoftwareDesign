@@ -10,13 +10,17 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.shaft.softwaredesign.GlideApp;
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.firebase.workers.manager.AccountManager;
 import com.example.shaft.softwaredesign.firebase.workers.manager.ContextManager;
@@ -34,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
@@ -52,6 +57,7 @@ public class EditAccountFragment extends Fragment{
     private CircleImageView imageView;
     private FragmentEditAccountBinding binding;
 
+    private String imagePathName;
     private Uri imageUri;
 
     private final int REQUEST_CODE = 1;
@@ -92,9 +98,9 @@ public class EditAccountFragment extends Fragment{
                         model.picture.set(imageUri.toString());
                     }
 
-                    LiveData<AccountState> state = AccountManager.getInstance().
+                    LiveData<AccountState> stateLiveData = AccountManager.getInstance().
                             updateAccount(ProfileViewModel.castToAccount(model));
-                    state.observe(this, new Observer<AccountState>() {
+                    stateLiveData.observe(this, new Observer<AccountState>() {
                         @Override
                         public void onChanged(AccountState state) {
                             if (state == null) {
@@ -102,6 +108,7 @@ public class EditAccountFragment extends Fragment{
                             }
                             else if (state.isSuccess) {
                                 navController.navigate(R.id.action_edit_account_fragment_to_account_fragment);
+                                stateLiveData.removeObserver(this);
                                 return;
                             }
 
@@ -130,7 +137,7 @@ public class EditAccountFragment extends Fragment{
                 if(resultCode == Activity.RESULT_OK){
                     Bitmap bitmap = (Bitmap) imageReturnedIntent.getExtras().get("data");
                     imageUri = getImageUri(getActivity().getApplicationContext(), bitmap);
-                    imageView.setImageURI(imageUri);
+                    imagePathName = imageUri.getPath();
                     uploadImage();
 
                     Toast toast = Toast.makeText(getActivity().getApplicationContext(),
@@ -141,7 +148,7 @@ public class EditAccountFragment extends Fragment{
             case SELECT_PICTURE_CODE:
                 if(resultCode == Activity.RESULT_OK){
                     imageUri = imageReturnedIntent.getData();
-                    imageView.setImageURI(imageUri);
+                    imagePathName = imageUri.getPath();
                     uploadImage();
 
                     Toast toast = Toast.makeText(getActivity().getApplicationContext(),
@@ -177,8 +184,8 @@ public class EditAccountFragment extends Fragment{
                 .setPositiveButton(getString(R.string.take),
                         (DialogInterface dialogInterface, int emptyArg) ->
                         {
-                            Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            startActivityForResult(takePicture, TAKE_PICTURE_CODE);
+                            Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(captureImage, TAKE_PICTURE_CODE);
                         })
                 .setNegativeButton(getString(R.string.select),
                         (DialogInterface dialogInterface, int emptyArg) ->
@@ -219,24 +226,34 @@ public class EditAccountFragment extends Fragment{
         LiveData<AccountState> liveData =
                 AccountManager.getInstance().getCurrentAccount();
 
-        liveData.observe(this, new Observer<AccountState>() {
-            @Override
-            public void onChanged(AccountState state) {
+        liveData.observe(this, (state) -> {
+            if (state == null || state.data == null) {
+                return;
+            }
+            else if (state.isSuccess) {
+                binding.setModel(ProfileViewModel.castToProfileViewModel(state.data));
+                String picUrl = state.data.getPicture();
 
-                if (state == null || state.data == null) {
-                    return;
-                }
-                else if (state.isSuccess) {
-                    binding.setModel(ProfileViewModel.castToProfileViewModel(state.data));
-                    return;
+                if (picUrl != null && picUrl.startsWith("content://media"))
+                {
+                    picUrl = picUrl.replace("content://media", "");
                 }
 
-                Toast.makeText(getActivity().getApplicationContext(),
-                        state.error, Toast.LENGTH_SHORT).show();
+                if (picUrl != null) {
+                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + picUrl);
+                    ImageView imageView = getView().findViewById(R.id.profile_image);
+
+                    GlideApp.with(requireActivity().getApplicationContext() /* context */)
+                            .load(storageReference)
+                            .into(imageView);
+
+                }
+                return;
             }
 
+            Toast.makeText(getActivity().getApplicationContext(),
+                    state.error, Toast.LENGTH_SHORT).show();
         });
-
     }
 
     private void uploadImage(){
@@ -244,11 +261,10 @@ public class EditAccountFragment extends Fragment{
         progressDialog.setTitle("Uploading...");
         progressDialog.show();
 
-        String imageRefPath = UUID.randomUUID().toString();
-        binding.getModel().picture.set(imageRefPath);
+        binding.getModel().picture.set(imagePathName);
 
         StorageReference ref = FirebaseStorage.getInstance().getReference()
-                .child("images/" + imageRefPath);
+                .child("images/" + imagePathName);
         ref.putFile(imageUri)
                 .addOnSuccessListener((taskSnapshot) -> {
                     progressDialog.dismiss();
@@ -256,6 +272,11 @@ public class EditAccountFragment extends Fragment{
                             getActivity().getApplicationContext(),
                             "Uploaded",
                             Toast.LENGTH_SHORT).show();
+
+                    Account account = ProfileViewModel.castToAccount(binding.getModel());
+                    account.setPicture(imagePathName);
+
+                    AccountManager.getInstance().updateAccount(account);
                 })
                 .addOnFailureListener((e) -> {
                         progressDialog.dismiss();
