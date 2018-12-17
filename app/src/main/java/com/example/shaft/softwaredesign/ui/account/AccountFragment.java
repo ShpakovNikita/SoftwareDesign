@@ -76,22 +76,18 @@ public class AccountFragment extends Fragment{
         LiveData<AccountState> liveData = AccountManager.getInstance().getCurrentAccount();
         ProgressBar bar = (ProgressBar) view.findViewById(R.id.progressBar);
         bar.setVisibility(View.VISIBLE);
-        liveData.observe(this, new Observer<AccountState>() {
-            @Override
-            public void onChanged(AccountState state) {
-
-                if (state == null || state.data == null) {
-                    return;
-                }
-                else if (state.isSuccess) {
-                    binding.setModel(ProfileViewModel.castToProfileViewModel(state.data));
-                    bar.setVisibility(View.INVISIBLE);
-                    return;
-                }
-
-                Toast.makeText(getActivity().getApplicationContext(),
-                        state.error, Toast.LENGTH_SHORT).show();
+        liveData.observe(this, (state) -> {
+            if (state == null || state.data == null) {
+                return;
             }
+            else if (state.isSuccess) {
+                binding.setModel(ProfileViewModel.castToProfileViewModel(state.data));
+                bar.setVisibility(View.INVISIBLE);
+                return;
+            }
+
+            Toast.makeText(getActivity().getApplicationContext(),
+                    state.error, Toast.LENGTH_SHORT).show();
 
         });
 

@@ -84,6 +84,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-database:16.0.5'
+    implementation "com.google.firebase:firebase-storage:16.0.5"
     def nav_version = "1.0.0-alpha08"
 
     implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
@@ -98,6 +99,8 @@ dependencies {
     //third party modules
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
 
 def getVerName() {
     def command = "git describe --tags"
