@@ -17,7 +17,7 @@
 
     <item
         android:id="@+id/second_blank_fragment"
-        android:title="Naniemo"
+        android:title="Cache"
         android:icon="@drawable/ic_telephone"
         app:showAsAction="ifRoom"/>
 </menu>

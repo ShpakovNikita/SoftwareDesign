@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.rss.model.Card;
 import com.example.shaft.softwaredesign.ui.WebActivity;
+import com.example.shaft.softwaredesign.utils.DateUtils;
 import com.prof.rssparser.Article;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -54,8 +55,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.card_description.setText(data.get(position).getTitle());
         holder.title.setText(data.get(position).getTitle());
 
-        DateFormat df = new SimpleDateFormat("E d M yyyy HH:mm:ss z");
-        holder.date.setText(df.format(data.get(position).getPubDate()));
+        holder.date.setText(DateUtils.parseToString(data.get(position).getPubDate()));
 
         holder.card_image.setOnClickListener((v) -> {onClickBinding.onCardClicked(v, data.get(position).getLink());});
 

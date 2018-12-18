@@ -236,18 +236,6 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="webViewFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-322" />
-                            <option name="y" value="88" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                 </map>
               </option>
             </LayoutPositions>
