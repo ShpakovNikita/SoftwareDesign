@@ -41,6 +41,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         this.onClickBinding = listener;
     }
 
+    public void clearData() {
+        if (data != null)
+            data.clear();
+    }
+
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

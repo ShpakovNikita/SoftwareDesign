@@ -7,10 +7,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.http.Url;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +38,9 @@ public class RssViewFragment extends Fragment {
 
     public static final String URL_KEY = "url";
     RecyclerView rvList;
+    SwipeRefreshLayout swipeRefreshLayout;
+    CardAdapter adapter;
+    ProgressBar bar;
     private String currentUrl;
 
     @Override
@@ -50,38 +52,45 @@ public class RssViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_first_blank, container, false);
+        View view = inflater.inflate(R.layout.fragment_rss_view, container, false);
 
         /* To restrict Space Bar in Keyboard */
-        InputFilter filter = new InputFilter() {
-            public CharSequence filter(CharSequence source, int start, int end,
-                                       Spanned dest, int dstart, int dend) {
+        InputFilter filter = (source, start, end, dest, dstart, dend) -> {
                 for (int i = start; i < end; i++) {
                     if (Character.isWhitespace(source.charAt(i))) {
                         return "";
                     }
                 }
                 return null;
-            }
         };
         ((EditText) view.findViewById(R.id.editText)).setFilters(new InputFilter[] { filter });
         rvList = view.findViewById(R.id.list_view);
+        bar = (ProgressBar) view.findViewById(R.id.progressBar);
         // readDataFromNetwork("http://www.androidcentral.com/feed");
-        //
         getUrl();
 
         Button button = (Button) view.findViewById(R.id.button);
         button.setOnClickListener((v)->{
             EditText editText = (EditText) view.findViewById(R.id.editText);
             String url = editText.getText().toString();
-            UrlRepository.getInstance().setUrl(url);
+            UrlRepository.getInstance().setUrl(UrlUtils.GetUrl(url));
+        });
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.container);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark);
+        swipeRefreshLayout.canChildScrollUp();
+        swipeRefreshLayout.setOnRefreshListener(()->{
+                adapter.clearData();
+                adapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(true);
+                readDataFromNetwork(UrlRepository.getInstance().getUrl().getValue());
         });
 
         return view;
     }
 
     private void setAdapter(ArrayList<Article> list){
-        CardAdapter adapter = new CardAdapter(getActivity(), list, (View v, String url)->{
+        adapter = new CardAdapter(getActivity(), list, (View v, String url)->{
             Intent intent = new Intent(getActivity(), WebActivity.class);
             Bundle b = new Bundle();
             b.putString(URL_KEY, url);
@@ -113,8 +122,8 @@ public class RssViewFragment extends Fragment {
             return;
         }
 
-        ProgressBar bar = (ProgressBar) getView().findViewById(R.id.progressBar);
-        bar.setVisibility(View.VISIBLE);
+        if (!swipeRefreshLayout.isRefreshing())
+            bar.setVisibility(View.VISIBLE);
 
         Parser parser = new Parser();
         parser.execute(urlString);
@@ -129,21 +138,20 @@ public class RssViewFragment extends Fragment {
                 StorageAdapter.getInstance(
                         getActivity().getApplicationContext()).pushData(storageUnit);
                 bar.setVisibility(View.INVISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onError(Exception e) {
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                getActivity().runOnUiThread(()->{
                         Toast.makeText(
                                 getActivity().getApplicationContext(),
                                 "Unable to load data",
                                 Toast.LENGTH_LONG).show();
                         Log.e("Unable to load ", e.getMessage());
                         bar.setVisibility(View.INVISIBLE);
-                    }
+                        swipeRefreshLayout.setRefreshing(false);
                 });
             }
         });
@@ -162,9 +170,12 @@ public class RssViewFragment extends Fragment {
             else {
                 currentUrl = url;
                 if (url != "") {
-                    readDataFromNetwork(UrlUtils.GetUrl(url));
+                    readDataFromNetwork(url);
                 } else {
-
+                    Toast.makeText(
+                            getActivity().getApplicationContext(),
+                            "Type url!",
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });

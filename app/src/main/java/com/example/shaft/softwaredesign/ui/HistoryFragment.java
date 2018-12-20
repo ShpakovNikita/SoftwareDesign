@@ -11,20 +11,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.cache.rss.StorageAdapter;
 import com.example.shaft.softwaredesign.cache.rss.model.HistoryUnit;
 import com.example.shaft.softwaredesign.repository.UrlRepository;
 import com.example.shaft.softwaredesign.rss.adapter.HistoryAdapter;
+import com.example.shaft.softwaredesign.utils.UrlUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class HistoryFragment extends Fragment {
 
     RecyclerView rvList;
+    ArrayList<HistoryUnit> data;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,20 +36,24 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_second_blank, container, false);
+        View view =  inflater.inflate(R.layout.fragment_cache, container, false);
 
         rvList = view.findViewById(R.id.list_view);
 
         readData();
+
+        if (!data.isEmpty()){
+            TextView tv = (TextView) view.findViewById(R.id.cache_tv);
+            tv.setVisibility(View.INVISIBLE);
+        }
         return view;
     }
 
     private void readData(){
-        ArrayList<HistoryUnit> list = StorageAdapter.getInstance(
-                getActivity().getApplicationContext()).getHistory();
+        data = StorageAdapter.getInstance(getActivity().getApplicationContext()).getHistory();
 
-        HistoryAdapter adapter = new HistoryAdapter(getActivity(), list, (url, pos) -> {
-            UrlRepository.getInstance().setUrl(url);
+        HistoryAdapter adapter = new HistoryAdapter(getActivity(), data, (url, pos) -> {
+            UrlRepository.getInstance().setUrl(UrlUtils.GetUrl(url));
             UrlRepository.getInstance().setPos(pos);
             NavController navController =
                     Navigation.findNavController(getActivity(), R.id.nav_host_fragment);

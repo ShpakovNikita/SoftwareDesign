@@ -18,7 +18,7 @@
         android:id="@+id/first_blank_fragment"
         android:name="com.example.shaft.softwaredesign.ui.RssViewFragment"
         android:label="fragment_first_blank"
-        tools:layout="@layout/fragment_first_blank" >
+        tools:layout="@layout/fragment_rss_view" >
         <action
             android:id="@+id/action_firstBlankFragment_to_secondBlankFragment"
             app:destination="@id/second_blank_fragment"
@@ -45,7 +45,7 @@
         android:id="@+id/second_blank_fragment"
         android:name="com.example.shaft.softwaredesign.ui.HistoryFragment"
         android:label="fragment_second_blank"
-        tools:layout="@layout/fragment_second_blank" >
+        tools:layout="@layout/fragment_cache" >
         <action
             android:id="@+id/action_secondBlankFragment_to_firstBlankFragment"
             app:destination="@id/first_blank_fragment"
