@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.cache.rss.model.HistoryUnit;
+import com.example.shaft.softwaredesign.repository.UrlRepository;
 import com.example.shaft.softwaredesign.rss.adapter.CardAdapter;
 import com.example.shaft.softwaredesign.rss.adapter.HistoryAdapter;
 import com.prof.rssparser.Article;
@@ -47,12 +50,18 @@ public class SecondBlankFragment extends Fragment {
     private void readData(){
         ArrayList<HistoryUnit> list = new ArrayList<>();
 
-        list.add(new HistoryUnit(new Date(), "eeds.bbci.co.uk/news/rss.xml"));
+        list.add(new HistoryUnit(new Date(), "feeds.bbci.co.uk/news/rss.xml"));
         list.add(new HistoryUnit(new Date(), "http://www.androidcentral.com/feed"));
         list.add(new HistoryUnit(new Date(), "http://feeds.bbci.co.uk/news/politics/rss.xml"));
-        list.add(new HistoryUnit(new Date(), "eeds.bbci.co.uk/news/rss.xml"));
+        list.add(new HistoryUnit(new Date(), "feeds.bbci.co.uk/news/rss.xml"));
 
-        HistoryAdapter adapter = new HistoryAdapter(getActivity(), list);
+        HistoryAdapter adapter = new HistoryAdapter(getActivity(), list, (url) -> {
+            UrlRepository.getInstance().setUrl(url);
+
+            NavController navController =
+                    Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+            navController.navigate(R.id.action_secondBlankFragment_to_firstBlankFragment);
+        });
         rv_list.setAdapter(adapter);
         rv_list.setLayoutManager(
                 new LinearLayoutManager(getContext(),

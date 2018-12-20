@@ -28,10 +28,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CardView
 
     private Context context;
     private List<HistoryUnit> data;
+    private HistoryClickListener onClickBinding;
 
-    public HistoryAdapter(Context context, List<HistoryUnit> data) {
+    public HistoryAdapter(Context context, List<HistoryUnit> data, HistoryClickListener listener) {
         this.context = context;
         this.data = data;
+        this.onClickBinding = listener;
     }
 
     @NonNull
@@ -48,7 +50,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CardView
         holder.link.setText(data.get(position).getLink());
         holder.date.setText(DateUtils.parseToString(data.get(position).getVisitDate()));
         holder.root.setOnClickListener((v) -> {
-            Toast.makeText(context, "Click!", Toast.LENGTH_SHORT).show();
+            onClickBinding.onHistoryClicked(data.get(position).getLink());
         });
     }
 
