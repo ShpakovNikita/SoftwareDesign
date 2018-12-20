@@ -3,16 +3,20 @@ package com.example.shaft.softwaredesign.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.http.Url;
 
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.shaft.softwaredesign.R;
@@ -21,23 +25,19 @@ import com.example.shaft.softwaredesign.cache.rss.model.HistoryUnit;
 import com.example.shaft.softwaredesign.cache.rss.model.StorageUnit;
 import com.example.shaft.softwaredesign.repository.UrlRepository;
 import com.example.shaft.softwaredesign.rss.adapter.CardAdapter;
-import com.example.shaft.softwaredesign.rss.adapter.CardClickListener;
-import com.example.shaft.softwaredesign.rss.model.Card;
+import com.example.shaft.softwaredesign.utils.UrlUtils;
 import com.prof.rssparser.Article;
 import com.prof.rssparser.Parser;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 
 public class FirstBlankFragment extends Fragment {
 
     public static final String URL_KEY = "url";
-    RecyclerView rv_list;
+    RecyclerView rvList;
+    private String currentUrl;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,50 +50,66 @@ public class FirstBlankFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_first_blank, container, false);
 
-        rv_list = view.findViewById(R.id.list_view);
-        // readData("http://www.androidcentral.com/feed");
+        /* To restrict Space Bar in Keyboard */
+        InputFilter filter = new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+                for (int i = start; i < end; i++) {
+                    if (Character.isWhitespace(source.charAt(i))) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+        };
+        ((EditText) view.findViewById(R.id.editText)).setFilters(new InputFilter[] { filter });
+        rvList = view.findViewById(R.id.list_view);
+        // readDataFromNetwork("http://www.androidcentral.com/feed");
         //
         getUrl();
+
+        Button button = (Button) view.findViewById(R.id.button);
+        button.setOnClickListener((v)->{
+            EditText editText = (EditText) view.findViewById(R.id.editText);
+            String url = editText.getText().toString();
+            UrlRepository.getInstance().setUrl(url);
+        });
+
         return view;
     }
 
-    private void testStorage(ArrayList<Article> list){
-
-        StorageUnit unit1 = new StorageUnit(list, new HistoryUnit(new Date(), "feeds.bbci.co.uk/news/rss.xml"));
-        StorageUnit unit2 = new StorageUnit(list, new HistoryUnit(new Date(), "feeds.bbci.co.uk/news/rss.xml"));
-        StorageUnit unit3 = new StorageUnit(list, new HistoryUnit(new Date(), "feeds.bbci.co.uk/news/rss.xml"));
-        StorageUnit unit4 = new StorageUnit(list, new HistoryUnit(new Date(), "feeds.bbci.co.uk/politics/rss.xml"));
-
-        StorageAdapter.getInstance(getActivity().getApplicationContext()).pushData(unit1);
-        StorageAdapter.getInstance(getActivity().getApplicationContext()).pushData(unit2);
-        StorageAdapter.getInstance(getActivity().getApplicationContext()).pushData(unit3);
-        StorageAdapter.getInstance(getActivity().getApplicationContext()).pushData(unit4);
-
-        StorageAdapter.getInstance(getActivity().getApplicationContext()).flushChanges();
+    private void setAdapter(ArrayList<Article> list){
+        CardAdapter adapter = new CardAdapter(getActivity(), list, (View v, String url)->{
+            Intent intent = new Intent(getActivity(), WebActivity.class);
+            Bundle b = new Bundle();
+            b.putString(URL_KEY, url);
+            intent.putExtras(b);
+            startActivity(intent);
+        });
+        rvList.setAdapter(adapter);
+        rvList.setLayoutManager(
+                new LinearLayoutManager(getContext(),
+                        RecyclerView.VERTICAL,
+                        false));
     }
 
-    private void readData(String urlString){
+    private void readDataFromNetwork(String urlString){
+        ProgressBar bar = (ProgressBar) getView().findViewById(R.id.progressBar);
+        bar.setVisibility(View.VISIBLE);
+
         Parser parser = new Parser();
         parser.execute(urlString);
         parser.onFinish(new Parser.OnTaskCompleted() {
 
             @Override
             public void onTaskCompleted(ArrayList<Article> list) {
-                CardAdapter adapter = new CardAdapter(getActivity(), list, (View v, String url)->{
-                    Intent intent = new Intent(getActivity(), WebActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString(URL_KEY, url);
-                    intent.putExtras(b);
-                    startActivity(intent);
-                });
-                rv_list.setAdapter(adapter);
-                rv_list.setLayoutManager(
-                        new LinearLayoutManager(getContext(),
-                                RecyclerView.VERTICAL,
-                                false));
+                setAdapter(list);
 
-                testStorage(list);
-
+                HistoryUnit historyUnit = new HistoryUnit(new Date(), currentUrl);
+                StorageUnit storageUnit = new StorageUnit(list, historyUnit);
+                StorageAdapter.getInstance(
+                        getActivity().getApplicationContext()).pushData(storageUnit);
+                bar.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -107,6 +123,7 @@ public class FirstBlankFragment extends Fragment {
                                 "Unable to load data",
                                 Toast.LENGTH_LONG).show();
                         Log.e("Unable to load ", e.getMessage());
+                        bar.setVisibility(View.INVISIBLE);
                     }
                 });
             }
@@ -115,17 +132,21 @@ public class FirstBlankFragment extends Fragment {
 
     private void getUrl(){
         UrlRepository.getInstance().getUrl().observe(this, (url)->{
-            if (url != ""){
-                if (url.startsWith("https://") || url.startsWith("http://")){
-                    readData(url);
-                }
-                else{
-                    String resUrl = "https://" + url;
-                    readData(resUrl);
-                }
-            }
-            else{
+            if (UrlRepository.getInstance().isChanged()){
+                ArrayList<StorageUnit> list = StorageAdapter.getInstance(
+                        getActivity().getApplicationContext()).getAllData();
 
+                setAdapter(list.get(UrlRepository.getInstance().getPos()).getCache());
+
+                UrlRepository.getInstance().resetPos();
+            }
+            else {
+                currentUrl = url;
+                if (url != "") {
+                    readDataFromNetwork(UrlUtils.GetUrl(url));
+                } else {
+
+                }
             }
         });
     }

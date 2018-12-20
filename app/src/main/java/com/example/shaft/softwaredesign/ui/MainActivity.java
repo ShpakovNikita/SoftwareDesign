@@ -3,8 +3,10 @@ package com.example.shaft.softwaredesign.ui;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.shaft.softwaredesign.R;
+import com.example.shaft.softwaredesign.cache.rss.StorageAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,18 +18,32 @@ import androidx.navigation.Navigation;
 public final class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
+    public View.OnFocusChangeListener focusListener = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View view, boolean hasFocus) {
+            if (hasFocus) {
+                bottomNavigationView.setVisibility(View.GONE);
+            } else {
+                bottomNavigationView.setVisibility(View.VISIBLE);
+
+            }
+        }
+    };
+
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation =
+        bottomNavigationView =
                 (BottomNavigationView) findViewById(R.id.bottom_navigation);
-
         NavController navController =
                 Navigation.findNavController(this, R.id.nav_host_fragment);
 
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 int current = navController.getCurrentDestination().getId();
@@ -127,4 +143,9 @@ public final class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onStop(){
+        super.onStop();
+        StorageAdapter.getInstance(getApplicationContext()).flushChanges();
+    }
 }

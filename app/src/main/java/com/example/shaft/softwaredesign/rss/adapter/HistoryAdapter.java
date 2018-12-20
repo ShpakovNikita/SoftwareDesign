@@ -50,7 +50,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CardView
         holder.link.setText(data.get(position).getLink());
         holder.date.setText(DateUtils.parseToString(data.get(position).getVisitDate()));
         holder.root.setOnClickListener((v) -> {
-            onClickBinding.onHistoryClicked(data.get(position).getLink());
+            onClickBinding.onHistoryClicked(data.get(position).getLink(), position);
         });
     }
 

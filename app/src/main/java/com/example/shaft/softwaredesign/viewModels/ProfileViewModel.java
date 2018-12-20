@@ -27,6 +27,9 @@ public class ProfileViewModel {
     }
 
     public static Account castToAccount(ProfileViewModel model){
+        if (model == null)
+            return null;
+
         Account account = new Account();
         if (model.picture != null)
             account.setPicture(model.picture.get());
@@ -40,6 +43,9 @@ public class ProfileViewModel {
     }
 
     public static ProfileViewModel castToProfileViewModel(Account account){
+        if (account == null)
+            return null;
+
         ProfileViewModel model = new ProfileViewModel();
         model.picture.set(account.getPicture());
         model.email.set(account.getEmail());

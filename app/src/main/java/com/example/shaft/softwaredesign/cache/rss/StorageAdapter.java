@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.example.shaft.softwaredesign.cache.rss.converters.StorageUnitConverter;
+import com.example.shaft.softwaredesign.cache.rss.model.HistoryUnit;
 import com.example.shaft.softwaredesign.cache.rss.model.StorageUnit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,15 +49,24 @@ public class StorageAdapter {
     }
 
     public void pushData(StorageUnit parsedData){
-        data.add(parsedData);
+        data.add(0, parsedData);
 
         if (data.size() > 10){
-            data.remove(0);
+            data.remove(data.size() - 1);
         }
     }
 
     public ArrayList<StorageUnit> getAllData(){
         return data;
+    }
+
+    public ArrayList<HistoryUnit> getHistory(){
+        ArrayList<HistoryUnit> history = new ArrayList<>();
+        for (StorageUnit unit: data) {
+            history.add(unit.getHistory());
+        }
+
+        return history;
     }
 
     public void flushChanges(){

@@ -1,6 +1,7 @@
 package com.example.shaft.softwaredesign.ui.auth;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -78,8 +79,9 @@ public class LoginFragment extends Fragment {
 
         LiveData<SignInState> stateLiveData = AuthManager.getInstance().signInUser(email, password);
 
-        ProgressBar bar = (ProgressBar) getView().findViewById(R.id.progressBar);
-        bar.setVisibility(View.VISIBLE);
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Signing in...");
+        progressDialog.show();
 
         stateLiveData.observe(this, new Observer<SignInState>(){
             @Override
@@ -98,7 +100,7 @@ public class LoginFragment extends Fragment {
                 }
 
                 stateLiveData.removeObserver(this);
-                bar.setVisibility(View.INVISIBLE);
+                progressDialog.dismiss();
             }
         });
     }

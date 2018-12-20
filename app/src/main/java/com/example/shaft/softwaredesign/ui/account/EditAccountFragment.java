@@ -24,6 +24,7 @@ import com.example.shaft.softwaredesign.firebase.workers.manager.AccountManager;
 import com.example.shaft.softwaredesign.databinding.FragmentEditAccountBinding;
 import com.example.shaft.softwaredesign.firebase.workers.state.AccountState;
 import com.example.shaft.softwaredesign.model.Account;
+import com.example.shaft.softwaredesign.ui.MainActivity;
 import com.example.shaft.softwaredesign.viewModels.ProfileViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
@@ -71,6 +72,14 @@ public class EditAccountFragment extends Fragment{
                         false);
 
         View view = binding.getRoot();
+        /*
+        view.findViewById(R.id.lastname_te).setOnFocusChangeListener(
+                ((MainActivity) getActivity()).focusListener);
+        view.findViewById(R.id.firstname_te).setOnFocusChangeListener(
+                ((MainActivity) getActivity()).focusListener);
+        view.findViewById(R.id.address_te).setOnFocusChangeListener(
+                ((MainActivity) getActivity()).focusListener);
+        */
         setData();
 
         FloatingActionButton floatingActionButton = view.findViewById(R.id.floatingActionButton);

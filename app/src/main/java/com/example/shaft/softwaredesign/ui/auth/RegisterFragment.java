@@ -1,6 +1,7 @@
 package com.example.shaft.softwaredesign.ui.auth;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -92,8 +93,10 @@ public class RegisterFragment extends Fragment {
         }
 
         LiveData<SignUpState> stateLiveData = AuthManager.getInstance().signUpUser(email, password);
-        ProgressBar bar = (ProgressBar) getView().findViewById(R.id.progressBar);
-        bar.setVisibility(View.VISIBLE);
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Signing up...");
+        progressDialog.show();
 
         // TODO: refactor this horrible monster!
         stateLiveData.observe(this, new Observer<SignUpState>(){
@@ -145,7 +148,7 @@ public class RegisterFragment extends Fragment {
                             }
 
                             signInState.removeObserver(this);
-                            bar.setVisibility(View.INVISIBLE);
+                            progressDialog.dismiss();
                         }
                     });
                 }
