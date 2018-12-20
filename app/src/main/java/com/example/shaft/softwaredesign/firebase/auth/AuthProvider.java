@@ -30,7 +30,7 @@ public class AuthProvider {
         }
 
         FirebaseUser user = auth.getCurrentUser();
-        return Objects.requireNonNull(user).getUid();
+        return user.getUid();
     }
 
     public String getCurrentUserEmail() {
@@ -39,7 +39,7 @@ public class AuthProvider {
         }
 
         FirebaseUser user = auth.getCurrentUser();
-        return Objects.requireNonNull(user).getEmail();
+        return user.getEmail();
     }
 
     public void signInUser(String email, String password, AuthListener listener) {

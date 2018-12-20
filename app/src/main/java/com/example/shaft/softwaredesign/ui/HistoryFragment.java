@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SecondBlankFragment extends Fragment {
+public class HistoryFragment extends Fragment {
 
     RecyclerView rvList;
 

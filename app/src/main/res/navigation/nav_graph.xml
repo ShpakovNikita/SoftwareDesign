@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/first_blank_fragment"
-        android:name="com.example.shaft.softwaredesign.ui.FirstBlankFragment"
+        android:name="com.example.shaft.softwaredesign.ui.RssViewFragment"
         android:label="fragment_first_blank"
         tools:layout="@layout/fragment_first_blank" >
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/second_blank_fragment"
-        android:name="com.example.shaft.softwaredesign.ui.SecondBlankFragment"
+        android:name="com.example.shaft.softwaredesign.ui.HistoryFragment"
         android:label="fragment_second_blank"
         tools:layout="@layout/fragment_second_blank" >
         <action

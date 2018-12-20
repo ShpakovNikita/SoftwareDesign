@@ -2,7 +2,9 @@ package com.example.shaft.softwaredesign.ui.auth;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.databinding.FragmentLoginBinding;
 import com.example.shaft.softwaredesign.firebase.auth.AuthManager;
 import com.example.shaft.softwaredesign.firebase.auth.state.SignInState;
+import com.example.shaft.softwaredesign.utils.NetworkUtils;
 import com.example.shaft.softwaredesign.viewModels.SignInViewModel;
 import com.google.android.gms.common.util.Strings;
 
@@ -60,7 +63,12 @@ public class LoginFragment extends Fragment {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSignInButtonClicked(v);
+                if(NetworkUtils.isNetworkConnected(getActivity().getApplicationContext())) {
+                    onSignInButtonClicked(v);
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            "No internet connection", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -24,7 +24,7 @@ public class WebActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         if(b != null) {
-            url = b.getString(FirstBlankFragment.URL_KEY);
+            url = b.getString(RssViewFragment.URL_KEY);
             WebView web_view = (WebView) findViewById(R.id.web_view);
             web_view.getSettings().setJavaScriptEnabled(true);
             web_view.setWebViewClient(new WebViewClient());

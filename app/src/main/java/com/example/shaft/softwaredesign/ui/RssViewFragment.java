@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.http.Url;
@@ -25,6 +26,7 @@ import com.example.shaft.softwaredesign.cache.rss.model.HistoryUnit;
 import com.example.shaft.softwaredesign.cache.rss.model.StorageUnit;
 import com.example.shaft.softwaredesign.repository.UrlRepository;
 import com.example.shaft.softwaredesign.rss.adapter.CardAdapter;
+import com.example.shaft.softwaredesign.utils.NetworkUtils;
 import com.example.shaft.softwaredesign.utils.UrlUtils;
 import com.prof.rssparser.Article;
 import com.prof.rssparser.Parser;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
-public class FirstBlankFragment extends Fragment {
+public class RssViewFragment extends Fragment {
 
     public static final String URL_KEY = "url";
     RecyclerView rvList;
@@ -87,13 +89,30 @@ public class FirstBlankFragment extends Fragment {
             startActivity(intent);
         });
         rvList.setAdapter(adapter);
-        rvList.setLayoutManager(
-                new LinearLayoutManager(getContext(),
-                        RecyclerView.VERTICAL,
-                        false));
+        if (getResources().getBoolean(R.bool.isTablet)){
+            rvList.setLayoutManager(
+                    new GridLayoutManager(getContext(),
+                            2,
+                            RecyclerView.VERTICAL,
+                            false));
+        }else{
+            rvList.setLayoutManager(
+                    new LinearLayoutManager(getContext(),
+                            RecyclerView.VERTICAL,
+                            false));
+        }
+
     }
 
     private void readDataFromNetwork(String urlString){
+        if (!NetworkUtils.isNetworkConnected(getActivity().getApplicationContext())){
+            Toast.makeText(
+                    getActivity().getApplicationContext(),
+                    "Unable to connect!",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
         ProgressBar bar = (ProgressBar) getView().findViewById(R.id.progressBar);
         bar.setVisibility(View.VISIBLE);
 

@@ -48,6 +48,28 @@ public class StorageAdapter {
         return instance;
     }
 
+    public void resetStorage() {
+        File file = new File(context.getFilesDir(), FILE_NAME);
+        try {
+            file.createNewFile();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            FileWriter writer = new FileWriter(file);
+
+            writer.append("");
+            writer.flush();
+            writer.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        data = new ArrayList<>();
+    }
+
     public void pushData(StorageUnit parsedData){
         data.add(0, parsedData);
 
@@ -101,7 +123,9 @@ public class StorageAdapter {
         String strData = "";
 
         try{
-            BufferedReader reader = new BufferedReader(new FileReader(context.getFilesDir().getAbsolutePath() + File.separator + FILE_NAME));
+            BufferedReader reader = new BufferedReader(
+                    new FileReader(
+                            context.getFilesDir().getAbsolutePath() + File.separator + FILE_NAME));
             StringBuilder stringBuilder = new StringBuilder();
             String line = null;
             String ls = System.getProperty("line.separator");

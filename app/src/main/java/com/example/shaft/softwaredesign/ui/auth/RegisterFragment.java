@@ -2,7 +2,9 @@ package com.example.shaft.softwaredesign.ui.auth;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.example.shaft.softwaredesign.R;
 import com.example.shaft.softwaredesign.databinding.FragmentRegisterBinding;
 import com.example.shaft.softwaredesign.firebase.auth.AuthManager;
 import com.example.shaft.softwaredesign.firebase.auth.state.SignUpState;
+import com.example.shaft.softwaredesign.utils.NetworkUtils;
 import com.example.shaft.softwaredesign.viewModels.ProfileViewModel;
 import com.example.shaft.softwaredesign.viewModels.SignUpViewModel;
 import com.google.android.gms.common.util.Strings;
@@ -52,10 +55,12 @@ public class RegisterFragment extends Fragment {
         Button signup =
                 (Button) view.findViewById(R.id.signup);
 
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        signup.setOnClickListener((v)->{
+            if(NetworkUtils.isNetworkConnected(getActivity().getApplicationContext())) {
                 onSignUpButtonClicked(v);
+            }else{
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "No internet connection", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -68,6 +73,13 @@ public class RegisterFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
     private void onSignInButtonClicked(View v){
