@@ -29,7 +29,6 @@ import java.util.Scanner;
 public class StorageAdapter {
 
     final private int DATA_CAPACITY = 10;
-    final private String DATA_CACHE_FOLDER = "com.example.shaft.softwaredesign";
     final private String FILE_NAME = "cache.json";
     private static StorageAdapter instance;
     private Context context;

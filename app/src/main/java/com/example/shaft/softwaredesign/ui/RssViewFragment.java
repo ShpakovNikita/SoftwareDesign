@@ -27,6 +27,7 @@ import com.example.shaft.softwaredesign.repository.UrlRepository;
 import com.example.shaft.softwaredesign.rss.adapter.CardAdapter;
 import com.example.shaft.softwaredesign.utils.NetworkUtils;
 import com.example.shaft.softwaredesign.utils.UrlUtils;
+import com.google.android.gms.common.util.Strings;
 import com.prof.rssparser.Article;
 import com.prof.rssparser.Parser;
 
@@ -66,8 +67,8 @@ public class RssViewFragment extends Fragment {
         ((EditText) view.findViewById(R.id.editText)).setFilters(new InputFilter[] { filter });
         rvList = view.findViewById(R.id.list_view);
         bar = (ProgressBar) view.findViewById(R.id.progressBar);
-        // readDataFromNetwork("http://www.androidcentral.com/feed");
         getUrl();
+        setAdapter(new ArrayList<>());
 
         Button button = (Button) view.findViewById(R.id.button);
         button.setOnClickListener((v)->{
@@ -125,8 +126,12 @@ public class RssViewFragment extends Fragment {
         if (!swipeRefreshLayout.isRefreshing())
             bar.setVisibility(View.VISIBLE);
 
+        if (Strings.isEmptyOrWhitespace(urlString)) {
+            swipeRefreshLayout.setRefreshing(false);
+            return;
+        }
         Parser parser = new Parser();
-        parser.execute(urlString);
+        parser.execute(UrlUtils.GetUrl(urlString));
         parser.onFinish(new Parser.OnTaskCompleted() {
 
             @Override
@@ -166,16 +171,12 @@ public class RssViewFragment extends Fragment {
                 setAdapter(list.get(UrlRepository.getInstance().getPos()).getCache());
 
                 UrlRepository.getInstance().resetPos();
+                currentUrl = url;
             }
             else {
                 currentUrl = url;
-                if (url != "") {
+                if (!Strings.isEmptyOrWhitespace(url)) {
                     readDataFromNetwork(url);
-                } else {
-                    Toast.makeText(
-                            getActivity().getApplicationContext(),
-                            "Type url!",
-                            Toast.LENGTH_LONG).show();
                 }
             }
         });
