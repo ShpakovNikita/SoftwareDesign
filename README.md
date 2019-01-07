@@ -16,3 +16,4 @@ This application is trying to use android architecture components and android be
  As for main UI, there is Activities for auth and Main application, and each activity have a fragment for navigation graph, in which we have our destination pages.
 
 ##### To run this application, just build it with the android studio 3.2+. #####
+ Original tasks for this labworks may be found [here](https://github.com/gmltA/SoftwareDesign_tasks).
