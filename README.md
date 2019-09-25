@@ -1,7 +1,6 @@
 # Software Design labworks. #
 ##### Rss reader and storage for personal info #####
 This little application can store your personal data with the firebase, and you may check it on any phone with this application later, by logging in. Also we provide rss reader to read different rss feeds with possibility to read full article and little cache storge for them, so you may read them in any time without internet!
-![sda](http://i63.tinypic.com/otqazd.jpg)
 ## Architecture ##
 This application is trying to use android architecture components and android best practices.
 ### Database ###
